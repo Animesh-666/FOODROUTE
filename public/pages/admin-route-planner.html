@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Planner (DAA) - Admin Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="sidebar">
+            <div class="p-3 mb-4 d-flex align-items-center justify-content-between">
+                <a href="../index.html" class="text-decoration-none">
+                    <h4 class="brand-logo gradient-text m-0"><i class="fa-solid fa-burger me-2"></i>Admin</h4>
+                </a>
+                <button class="btn btn-link text-light d-lg-none p-0" id="closeSidebarBtn">
+                    <i class="fa-solid fa-xmark fa-lg"></i>
+                </button>
+            </div>
+            
+            <ul class="nav flex-column mb-auto">
+                <li class="nav-item"><a href="admin-dashboard.html" class="nav-link"><i class="fa-solid fa-gauge-high"></i> Dashboard</a></li>
+                <li class="nav-item"><a href="admin-orders.html" class="nav-link"><i class="fa-solid fa-clipboard-list"></i> Orders</a></li>
+                <li class="nav-item"><a href="admin-route-planner.html" class="nav-link active"><i class="fa-solid fa-map-location-dot"></i> Route Planner</a></li>
+                <li class="nav-item"><a href="admin-menu.html" class="nav-link"><i class="fa-solid fa-utensils"></i> Menu Items</a></li>
+                <li class="nav-item"><a href="admin-users.html" class="nav-link"><i class="fa-solid fa-users"></i> Customers</a></li>
+                <li class="nav-item"><a href="admin-agents.html" class="nav-link"><i class="fa-solid fa-motorcycle"></i> Delivery Agents</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-dark border-secondary me-3 d-lg-none" id="toggleSidebarBtn">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <h2 class="m-0 fw-bold">Smart Route Planner (TSP)</h2>
+                </div>
+            </div>
+
+            <div class="row g-4 h-100">
+                <!-- Sidebar Tools -->
+                <div class="col-lg-4 d-flex flex-column gap-3">
+                    <!-- Step 1: Select Orders -->
+                    <div class="glass-card p-3">
+                        <h5 class="mb-3 d-flex justify-content-between align-items-center">
+                            <span>1. Pending Orders</span>
+                            <span class="badge bg-primary rounded-pill" id="pendingCount">0</span>
+                        </h5>
+                        <div class="alert alert-info small py-2 mb-3">
+                            <i class="fa-solid fa-circle-info"></i> Select up to 10 orders to bundle for a delivery agent.
+                        </div>
+                        
+                        <div id="pendingOrdersList" class="overflow-auto pe-2" style="max-height: 250px;">
+                            <div class="text-center py-3"><div class="spinner-border spinner-border-sm text-primary"></div></div>
+                        </div>
+                        
+                        <button class="btn btn-primary w-100 mt-3" id="btnOptimize" disabled>
+                            <i class="fa-solid fa-route me-2"></i> Optimize Route
+                        </button>
+                    </div>
+                    
+                    <!-- Step 2: DAA Algorithm Results -->
+                    <div class="glass-card p-3 flex-grow-1" id="algorithmResultsPanel" style="display: none;">
+                        <h5 class="mb-3 text-success">2. Optimization Results</h5>
+                        
+                        <div class="border-bottom border-secondary pb-2 mb-2">
+                            <span class="text-muted d-block small mb-1">Best Algorithm:</span>
+                            <span class="fw-bold text-primary" id="resBestAlgo">-</span>
+                        </div>
+                        <div class="border-bottom border-secondary pb-2 mb-2">
+                            <span class="text-muted d-block small mb-1">Fastest to compute:</span>
+                            <span class="fw-bold text-info" id="resFastestAlgo">-</span>
+                        </div>
+                        <div class="border-bottom border-secondary pb-2 mb-3">
+                            <span class="text-muted d-block small mb-1">Total Distance:</span>
+                            <span class="fw-bold text-success" id="resTotalDist">-</span>
+                        </div>
+                        
+                        <div class="accordion" id="algoAccordion">
+                            <!-- Injected by JS -->
+                        </div>
+                        
+                        <button class="btn btn-success-gradient w-100 mt-4" id="btnAssignRoute">
+                            <i class="fa-solid fa-motorcycle me-2"></i> Assign to Agent
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Map Area -->
+                <div class="col-lg-8">
+                    <div class="glass-card p-2 h-100" style="min-height: 600px;">
+                        <div id="routingMap" class="w-100 h-100 rounded z-0"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Agent Assignment Modal -->
+    <div class="modal fade custom-modal" id="assignAgentModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-themed">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title">Assign Optimized Route</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted mb-4">Select an available delivery agent to dispatch this route containing <strong id="modalOrdersCount" class="text-white">0</strong> orders.</p>
+                    
+                    <select class="form-select form-input-themed mb-4" id="selectAgentForRoute">
+                        <option value="">Loading agents...</option>
+                    </select>
+                    
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-outline-light me-2" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="confirmAssignBtn">Dispatch Route</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- We will use polyline drawing instead of routing machine to show straight exact algorithm lines -->
+    
+    <script src="../js/app.js"></script>
+    <script src="../js/routePlanner.js"></script>
+</body>
+</html>

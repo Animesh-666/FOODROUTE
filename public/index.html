@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ═══════════════════════════════════════════════════════════
+       SMART FOOD DELIVERY ROUTE PLANNER — Landing Page
+       File: public/index.html
+       ═══════════════════════════════════════════════════════════ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- SEO Meta Tags -->
+  <title>FoodRoute — Smart Food Delivery Route Planner</title>
+  <meta name="description" content="FoodRoute uses advanced route optimization algorithms to deliver fresh food faster. Browse menus, place orders, and track your delivery in real time." />
+  <meta name="keywords" content="food delivery, route planner, smart delivery, fast food delivery, order tracking, TSP optimization" />
+  <meta name="author" content="FoodRoute Team" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="FoodRoute — Smart Food Delivery Route Planner" />
+  <meta property="og:description" content="Optimized Routes. Fresh Food. Fast Delivery." />
+  <meta property="og:type" content="website" />
+
+  <!-- Favicon (emoji-based data URI) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>" />
+
+  <!-- Bootstrap 5.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Font Awesome 6 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+
+  <!-- Leaflet 1.9.4 (for potential map preview) -->
+  <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet" />
+
+  <!-- Global Custom Styles -->
+  <link href="/css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+  <!-- ═══════════════════════════════════════════════════════════
+       NAVBAR — Glassmorphism
+       ═══════════════════════════════════════════════════════════ -->
+  <nav class="navbar navbar-expand-lg navbar-glass fixed-top">
+    <div class="container">
+      <!-- Brand -->
+      <a class="navbar-brand" href="/">
+        <span class="brand-icon">🍔</span> FoodRoute
+      </a>
+
+      <!-- Mobile Toggle -->
+      <button class="navbar-toggler border-0" type="button"
+              data-bs-toggle="collapse" data-bs-target="#mainNav"
+              aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars" style="color:var(--clr-text-primary);font-size:1.2rem;"></i>
+      </button>
+
+      <!-- Nav Links -->
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/pages/menu.html">Menu</a></li>
+          <li class="nav-item"><a class="nav-link" href="#how-it-works">How It Works</a></li>
+          <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link" href="#categories">Categories</a></li>
+        </ul>
+
+        <!-- Auth Section (dynamically updated by app.js) -->
+        <ul class="navbar-nav align-items-center" id="nav-auth-section">
+          <!-- Populated by updateNavbar() in app.js -->
+          <li class="nav-item">
+            <a class="nav-link" href="/pages/login.html"><i class="fa-solid fa-right-to-bracket me-1"></i> Login</a>
+          </li>
+          <li class="nav-item ms-2">
+            <a class="btn btn-primary-gradient btn-sm" href="/pages/signup.html"><i class="fa-solid fa-user-plus me-1"></i> Sign Up</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HERO SECTION
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="hero-section" id="hero">
+    <!-- Animated gradient background -->
+    <div class="hero-bg-animation"></div>
+    <!-- Radial overlay glows -->
+    <div class="hero-overlay"></div>
+
+    <!-- Floating food emojis -->
+    <span class="floating-food">🍕</span>
+    <span class="floating-food">🍜</span>
+    <span class="floating-food">🌮</span>
+    <span class="floating-food">🍣</span>
+    <span class="floating-food">🥗</span>
+    <span class="floating-food">🍩</span>
+    <span class="floating-food">🧁</span>
+    <span class="floating-food">🥤</span>
+
+    <!-- Hero Content -->
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <span class="gradient-text-animated">Smart Food Delivery</span>
+      </h1>
+      <p class="hero-subtitle">
+        Optimized Routes. Fresh Food. Fast Delivery.<br />
+        Powered by intelligent algorithms that find the fastest path to your door.
+      </p>
+      <div class="hero-cta">
+        <a href="/pages/menu.html" class="btn btn-primary-gradient btn-lg">
+          <i class="fa-solid fa-utensils"></i> Order Now
+        </a>
+        <a href="#how-it-works" class="btn btn-outline-glass btn-lg">
+          <i class="fa-solid fa-play"></i> Learn More
+        </a>
+      </div>
+
+      <!-- Quick stats under hero CTA -->
+      <div class="d-flex justify-content-center gap-4 mt-4 flex-wrap" style="opacity:0.7;">
+        <span class="d-flex align-items-center gap-2" style="font-size:0.9rem;">
+          <i class="fa-solid fa-clock text-accent"></i> 30 min avg delivery
+        </span>
+        <span class="d-flex align-items-center gap-2" style="font-size:0.9rem;">
+          <i class="fa-solid fa-route text-secondary-clr"></i> AI-optimized routes
+        </span>
+        <span class="d-flex align-items-center gap-2" style="font-size:0.9rem;">
+          <i class="fa-solid fa-star" style="color:#f59e0b;"></i> 4.8 avg rating
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HOW IT WORKS — 3 Steps
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <div class="text-center mb-5 reveal">
+        <h2 class="section-title">How It <span class="gradient-text">Works</span></h2>
+        <div class="section-divider"></div>
+        <p class="section-subtitle mt-3">
+          Three simple steps to get delicious food delivered to your doorstep with optimized routes.
+        </p>
+      </div>
+
+      <div class="row g-4 stagger-children">
+        <!-- Step 1 -->
+        <div class="col-md-4 reveal">
+          <div class="glass-card feature-card text-center h-100">
+            <div class="step-number">1</div>
+            <div class="feature-icon icon-accent mx-auto mb-3">
+              <i class="fa-solid fa-burger"></i>
+            </div>
+            <h4>Browse Menu</h4>
+            <p class="text-muted-custom">
+              Explore hundreds of dishes from top-rated local restaurants. Filter by cuisine, price, or ratings.
+            </p>
+          </div>
+        </div>
+        <!-- Step 2 -->
+        <div class="col-md-4 reveal">
+          <div class="glass-card feature-card text-center h-100">
+            <div class="step-number">2</div>
+            <div class="feature-icon icon-secondary mx-auto mb-3">
+              <i class="fa-solid fa-bag-shopping"></i>
+            </div>
+            <h4>Place Order</h4>
+            <p class="text-muted-custom">
+              Add items to your cart, customize your meal, choose payment, and place your order in seconds.
+            </p>
+          </div>
+        </div>
+        <!-- Step 3 -->
+        <div class="col-md-4 reveal">
+          <div class="glass-card feature-card text-center h-100">
+            <div class="step-number">3</div>
+            <div class="feature-icon icon-success mx-auto mb-3">
+              <i class="fa-solid fa-truck-fast"></i>
+            </div>
+            <h4>Fast Delivery</h4>
+            <p class="text-muted-custom">
+              Our AI finds the fastest route. Track your rider in real time and enjoy your food while it's hot!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FEATURES SECTION
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="section" id="features" style="background: rgba(0,0,0,0.15);">
+    <div class="container">
+      <div class="text-center mb-5 reveal">
+        <h2 class="section-title">Why Choose <span class="gradient-text-secondary">FoodRoute</span></h2>
+        <div class="section-divider" style="background:var(--clr-secondary-gradient);"></div>
+        <p class="section-subtitle mt-3">
+          We combine cutting-edge technology with passion for food to create the best delivery experience.
+        </p>
+      </div>
+
+      <div class="row g-4 stagger-children">
+        <!-- Feature 1 -->
+        <div class="col-lg-3 col-sm-6 reveal">
+          <div class="glass-card feature-card h-100">
+            <div class="feature-icon icon-accent mx-auto mb-3">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+            <h5>Smart Route Optimization</h5>
+            <p class="text-muted-custom" style="font-size:0.88rem;">
+              TSP-based algorithms compute the shortest multi-stop delivery route, reducing delivery time by up to 40%.
+            </p>
+          </div>
+        </div>
+        <!-- Feature 2 -->
+        <div class="col-lg-3 col-sm-6 reveal">
+          <div class="glass-card feature-card h-100">
+            <div class="feature-icon icon-secondary mx-auto mb-3">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <h5>Live Order Tracking</h5>
+            <p class="text-muted-custom" style="font-size:0.88rem;">
+              Watch your delivery rider on a real-time map. Know exactly when your order will arrive.
+            </p>
+          </div>
+        </div>
+        <!-- Feature 3 -->
+        <div class="col-lg-3 col-sm-6 reveal">
+          <div class="glass-card feature-card h-100">
+            <div class="feature-icon icon-success mx-auto mb-3">
+              <i class="fa-solid fa-bolt-lightning"></i>
+            </div>
+            <h5>Lightning Fast</h5>
+            <p class="text-muted-custom" style="font-size:0.88rem;">
+              Average delivery in under 30 minutes. Priority batching ensures your food stays fresh and hot.
+            </p>
+          </div>
+        </div>
+        <!-- Feature 4 -->
+        <div class="col-lg-3 col-sm-6 reveal">
+          <div class="glass-card feature-card h-100">
+            <div class="feature-icon icon-warning mx-auto mb-3">
+              <i class="fa-solid fa-credit-card"></i>
+            </div>
+            <h5>Multiple Payments</h5>
+            <p class="text-muted-custom" style="font-size:0.88rem;">
+              Pay via UPI, cards, wallets, net banking, or choose Cash on Delivery — whatever works for you.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       POPULAR CATEGORIES
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="section" id="categories">
+    <div class="container">
+      <div class="text-center mb-5 reveal">
+        <h2 class="section-title">Popular <span class="gradient-text">Categories</span></h2>
+        <div class="section-divider"></div>
+        <p class="section-subtitle mt-3">
+          Craving something specific? Jump straight to your favourite cuisine.
+        </p>
+      </div>
+
+      <div class="row g-4 stagger-children">
+        <div class="col-6 col-md-4 col-lg-2 reveal">
+          <a href="/pages/menu.html?category=pizza" class="text-decoration-none">
+            <div class="glass-card category-card h-100">
+              <span class="category-emoji">🍕</span>
+              <span class="category-name">Pizza</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 reveal">
+          <a href="/pages/menu.html?category=burgers" class="text-decoration-none">
+            <div class="glass-card category-card h-100">
+              <span class="category-emoji">🍔</span>
+              <span class="category-name">Burgers</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 reveal">
+          <a href="/pages/menu.html?category=sushi" class="text-decoration-none">
+            <div class="glass-card category-card h-100">
+              <span class="category-emoji">🍣</span>
+              <span class="category-name">Sushi</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 reveal">
+          <a href="/pages/menu.html?category=indian" class="text-decoration-none">
+            <div class="glass-card category-card h-100">
+              <span class="category-emoji">🍛</span>
+              <span class="category-name">Indian</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 reveal">
+          <a href="/pages/menu.html?category=chinese" class="text-decoration-none">
+            <div class="glass-card category-card h-100">
+              <span class="category-emoji">🥡</span>
+              <span class="category-name">Chinese</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 reveal">
+          <a href="/pages/menu.html?category=desserts" class="text-decoration-none">
+            <div class="glass-card category-card h-100">
+              <span class="category-emoji">🍰</span>
+              <span class="category-name">Desserts</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STATS / COUNTER SECTION
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="section" style="background: rgba(0,0,0,0.15);">
+    <div class="container">
+      <div class="row g-4 text-center stagger-children">
+        <!-- Stat 1 -->
+        <div class="col-6 col-md-3 reveal">
+          <div class="stat-card">
+            <div class="stat-icon text-accent"><i class="fa-solid fa-face-smile"></i></div>
+            <div class="stat-number gradient-text" data-count="15000" data-suffix="+">0</div>
+            <div class="stat-label">Happy Customers</div>
+          </div>
+        </div>
+        <!-- Stat 2 -->
+        <div class="col-6 col-md-3 reveal">
+          <div class="stat-card">
+            <div class="stat-icon text-secondary-clr"><i class="fa-solid fa-box"></i></div>
+            <div class="stat-number gradient-text-secondary" data-count="85000" data-suffix="+">0</div>
+            <div class="stat-label">Deliveries Made</div>
+          </div>
+        </div>
+        <!-- Stat 3 -->
+        <div class="col-6 col-md-3 reveal">
+          <div class="stat-card">
+            <div class="stat-icon" style="color:var(--clr-success);"><i class="fa-solid fa-store"></i></div>
+            <div class="stat-number" style="color:var(--clr-success);" data-count="320" data-suffix="+">0</div>
+            <div class="stat-label">Restaurants</div>
+          </div>
+        </div>
+        <!-- Stat 4 -->
+        <div class="col-6 col-md-3 reveal">
+          <div class="stat-card">
+            <div class="stat-icon" style="color:var(--clr-warning);"><i class="fa-solid fa-city"></i></div>
+            <div class="stat-number" style="color:var(--clr-warning);" data-count="25" data-suffix="">0</div>
+            <div class="stat-label">Cities Covered</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       CTA BANNER
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="container">
+      <div class="glass-card-static text-center py-5 px-3 reveal" style="border-radius:var(--radius-xl);background:linear-gradient(135deg,rgba(233,69,96,0.1),rgba(0,210,255,0.08));">
+        <h2 class="mb-3">Ready to Experience <span class="gradient-text-animated">Smart Delivery</span>?</h2>
+        <p class="text-muted-custom mb-4" style="max-width:520px;margin:0 auto;">
+          Join thousands of food lovers who already enjoy faster, fresher deliveries powered by intelligent route optimization.
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+          <a href="/pages/signup.html" class="btn btn-primary-gradient btn-lg">
+            <i class="fa-solid fa-rocket"></i> Get Started Free
+          </a>
+          <a href="/pages/menu.html" class="btn btn-outline-glass btn-lg">
+            <i class="fa-solid fa-search"></i> Browse Menu
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row g-4">
+        <!-- Brand Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="footer-brand">🍔 FoodRoute</div>
+          <p class="footer-desc">
+            Smart Food Delivery Route Planner — using cutting-edge algorithms to bring your favourite meals faster and fresher.
+          </p>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          </div>
+        </div>
+        <!-- Quick Links -->
+        <div class="col-lg-2 col-md-6">
+          <h6 class="footer-heading">Quick Links</h6>
+          <ul class="footer-links">
+            <li><a href="/"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i> Home</a></li>
+            <li><a href="/pages/menu.html"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i> Menu</a></li>
+            <li><a href="/pages/cart.html"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i> Cart</a></li>
+            <li><a href="/pages/orders.html"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i> My Orders</a></li>
+            <li><a href="/pages/profile.html"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i> Profile</a></li>
+          </ul>
+        </div>
+        <!-- Company -->
+        <div class="col-lg-2 col-md-6">
+          <h6 class="footer-heading">Company</h6>
+          <ul class="footer-links">
+            <li><a href="#"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i> About Us</a></li>
+            <li><a href="#"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i> Careers</a></li>
+            <li><a href="#"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i> Blog</a></li>
+            <li><a href="#"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i> Contact</a></li>
+          </ul>
+        </div>
+        <!-- Support -->
+        <div class="col-lg-2 col-md-6">
+          <h6 class="footer-heading">Support</h6>
+          <ul class="footer-links">
+            <li><a href="#"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i> Help Centre</a></li>
+            <li><a href="#"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i> Privacy Policy</a></li>
+            <li><a href="#"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i> Terms of Service</a></li>
+            <li><a href="#"><i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i> FAQs</a></li>
+          </ul>
+        </div>
+        <!-- Contact Info -->
+        <div class="col-lg-2 col-md-6">
+          <h6 class="footer-heading">Contact</h6>
+          <ul class="footer-links">
+            <li><a href="mailto:support@foodroute.in"><i class="fa-solid fa-envelope me-1"></i> support@foodroute.in</a></li>
+            <li><a href="tel:+911234567890"><i class="fa-solid fa-phone me-1"></i> +91 12345 67890</a></li>
+            <li><span style="color:var(--clr-text-muted);font-size:0.9rem;"><i class="fa-solid fa-location-dot me-1"></i> Bengaluru, India</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="footer-bottom">
+        &copy; 2026 <a href="/">FoodRoute</a>. All rights reserved. Built with
+        <i class="fa-solid fa-heart" style="color:var(--clr-accent);"></i> &amp; smart algorithms.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SCRIPTS
+       ═══════════════════════════════════════════════════════════ -->
+  <!-- Bootstrap 5.3 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Leaflet 1.9.4 JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Global App JS -->
+  <script src="/js/app.js"></script>
+</body>
+</html>

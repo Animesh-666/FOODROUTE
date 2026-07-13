@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Smart Food Delivery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/customer.css">
+</head>
+<body class="menu-page">
+
+    <!-- Navbar Section (Injected by JS) -->
+    <nav class="navbar navbar-expand-lg fixed-top glass-navbar" id="main-nav">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <h3 class="brand-logo gradient-text m-0"><i class="fa-solid fa-burger me-2"></i>FoodRoute</h3>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="menu.html">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="customer-dashboard.html">Dashboard</a></li>
+                </ul>
+                <div class="d-flex align-items-center" id="nav-auth-section">
+                    <!-- Auth injected by app.js -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header pt-5 pb-4 mt-5 text-center position-relative">
+        <div class="container position-relative z-1">
+            <h1 class="display-4 fw-bold mb-3">Our Menu</h1>
+            <p class="lead text-muted mb-4">Discover delicious food around you.</p>
+            
+            <!-- Search Bar -->
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="search-bar-wrapper position-relative">
+                        <i class="fa-solid fa-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                        <input type="text" class="form-control form-control-lg rounded-pill ps-5 form-input-themed" id="searchInput" placeholder="Search for food...">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container py-4 mb-5">
+        <div class="row g-4">
+            <!-- Sidebar Filters -->
+            <div class="col-lg-3">
+                <div class="glass-card p-4 sticky-top" style="top: 100px; z-index: 10;">
+                    <h5 class="mb-4">Filters</h5>
+                    
+                    <div class="mb-4">
+                        <h6 class="text-muted mb-3">Categories</h6>
+                        <div id="categoryFilters">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="category" id="cat-all" value="" checked>
+                                <label class="form-check-label" for="cat-all">All Categories</label>
+                            </div>
+                            <!-- Categories injected here -->
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6 class="text-muted mb-3">Dietary</h6>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="filterVeg" value="true">
+                            <label class="form-check-label" for="filterVeg">
+                                <span class="badge bg-success ms-1"><i class="fa-solid fa-leaf"></i> Pure Veg Only</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h6 class="text-muted mb-3">Sort By</h6>
+                        <select class="form-select form-input-themed" id="sortSelect">
+                            <option value="created_at_DESC">Newest Arrivals</option>
+                            <option value="price_ASC">Price: Low to High</option>
+                            <option value="price_DESC">Price: High to Low</option>
+                            <option value="name_ASC">Name: A to Z</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Grid -->
+            <div class="col-lg-9">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="m-0" id="resultCount">Loading menu...</h5>
+                    
+                    <!-- Mobile Filter Toggle (Visible only on small screens) -->
+                    <button class="btn btn-outline-light d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileFilters">
+                        <i class="fa-solid fa-filter me-2"></i> Filters
+                    </button>
+                </div>
+
+                <div class="row g-4" id="menuGrid">
+                    <!-- Food items injected here by JS -->
+                    <div class="col-12 text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <nav class="mt-5" aria-label="Menu pagination">
+                    <ul class="pagination justify-content-center" id="pagination">
+                        <!-- Pagination injected here -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/menu.js"></script>
+</body>
+</html>

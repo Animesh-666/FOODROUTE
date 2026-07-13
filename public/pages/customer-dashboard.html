@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Smart Food Delivery</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="dashboard-page">
+
+    <!-- Navbar Section (Injected by JS) -->
+    <nav class="navbar navbar-expand-lg fixed-top glass-navbar" id="main-nav">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <h3 class="brand-logo gradient-text m-0"><i class="fa-solid fa-burger me-2"></i>FoodRoute</h3>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="menu.html">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="customer-dashboard.html">Dashboard</a></li>
+                </ul>
+                <div class="d-flex align-items-center" id="nav-auth-section">
+                    <!-- Auth injected by app.js -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container py-5 mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="gradient-text mb-0">Welcome Back, <span id="userName">User</span>! 👋</h2>
+            <a href="menu.html" class="btn btn-primary-gradient">
+                <i class="fa-solid fa-utensils me-2"></i> Order Food
+            </a>
+        </div>
+
+        <div class="row g-4 mb-5">
+            <!-- Stats Cards -->
+            <div class="col-md-4">
+                <div class="glass-card stat-card p-4 text-center h-100">
+                    <div class="stat-icon-wrapper mx-auto mb-3" style="background: rgba(14, 165, 233, 0.1); color: var(--accent-secondary);">
+                        <i class="fa-solid fa-box-open fa-2x"></i>
+                    </div>
+                    <h3 class="display-5 fw-bold mb-1" id="statActiveOrders">0</h3>
+                    <p class="text-muted mb-0">Active Orders</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="glass-card stat-card p-4 text-center h-100">
+                    <div class="stat-icon-wrapper mx-auto mb-3" style="background: rgba(16, 185, 129, 0.1); color: var(--success);">
+                        <i class="fa-solid fa-check-circle fa-2x"></i>
+                    </div>
+                    <h3 class="display-5 fw-bold mb-1" id="statTotalOrders">0</h3>
+                    <p class="text-muted mb-0">Total Orders</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="glass-card stat-card p-4 text-center h-100">
+                    <div class="stat-icon-wrapper mx-auto mb-3" style="background: rgba(233, 69, 96, 0.1); color: var(--accent-primary);">
+                        <i class="fa-solid fa-wallet fa-2x"></i>
+                    </div>
+                    <h3 class="display-5 fw-bold mb-1" id="statTotalSpent">₹0</h3>
+                    <p class="text-muted mb-0">Total Spent</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Quick Actions -->
+            <div class="col-lg-4">
+                <h4 class="mb-3">Quick Actions</h4>
+                <div class="d-flex flex-column gap-3">
+                    <a href="order-history.html" class="glass-card p-3 d-flex align-items-center text-decoration-none action-card">
+                        <div class="action-icon bg-primary-subtle text-primary rounded-circle p-2 me-3">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-white m-0">Order History</h6>
+                            <small class="text-muted">View past deliveries</small>
+                        </div>
+                        <i class="fa-solid fa-chevron-right ms-auto text-muted"></i>
+                    </a>
+                    
+                    <a href="profile.html" class="glass-card p-3 d-flex align-items-center text-decoration-none action-card">
+                        <div class="action-icon bg-success-subtle text-success rounded-circle p-2 me-3">
+                            <i class="fa-solid fa-user-gear"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-white m-0">Profile Settings</h6>
+                            <small class="text-muted">Update details & address</small>
+                        </div>
+                        <i class="fa-solid fa-chevron-right ms-auto text-muted"></i>
+                    </a>
+                    
+                    <a href="cart.html" class="glass-card p-3 d-flex align-items-center text-decoration-none action-card">
+                        <div class="action-icon bg-warning-subtle text-warning rounded-circle p-2 me-3">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-white m-0">My Cart</h6>
+                            <small class="text-muted">View pending items</small>
+                        </div>
+                        <i class="fa-solid fa-chevron-right ms-auto text-muted"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Recent Active Orders -->
+            <div class="col-lg-8">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="m-0">Recent Orders</h4>
+                    <a href="order-history.html" class="text-primary text-decoration-none small">View All</a>
+                </div>
+                
+                <div class="glass-card p-0 overflow-hidden">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0 custom-table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Date</th>
+                                    <th>Items</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentOrdersList">
+                                <tr><td colspan="6" class="text-center py-4">Loading orders...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/customer.js"></script>
+</body>
+</html>

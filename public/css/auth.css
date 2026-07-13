@@ -1,0 +1,276 @@
+/**
+ * =================================================
+ * Auth Styles (Login & Signup) - Premium Redesign
+ * =================================================
+ */
+
+.auth-page {
+    background: var(--clr-bg-start);
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Split Layout Container */
+.auth-split-layout {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* Left Side - Branding & Imagery */
+.auth-brand-side {
+    flex: 1;
+    display: none; /* Hidden on mobile */
+    position: relative;
+    background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(22, 33, 62, 0.95)), 
+                url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+    color: white;
+    padding: 4rem;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+@media (min-width: 992px) {
+    .auth-brand-side {
+        display: flex;
+    }
+}
+
+/* Overlay gradient for brand side */
+.auth-brand-side::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at top left, rgba(233, 69, 96, 0.4), transparent 60%),
+                radial-gradient(circle at bottom right, rgba(14, 165, 233, 0.4), transparent 60%);
+    z-index: 1;
+}
+
+.auth-brand-content {
+    position: relative;
+    z-index: 2;
+    max-width: 500px;
+}
+
+.auth-brand-content h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(to right, #fff, #a5b4fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.auth-feature-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 3rem;
+}
+
+.auth-feature-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.auth-feature-list i {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: var(--clr-accent);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Right Side - Form Container */
+.auth-form-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background: var(--clr-bg-start);
+    position: relative;
+}
+
+/* Form Card (Glassmorphism on mobile, flat on desktop since bg is dark) */
+.auth-form-wrapper {
+    width: 100%;
+    max-width: 450px;
+    animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-brand {
+    display: block;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+@media (min-width: 992px) {
+    .mobile-brand {
+        display: none;
+    }
+}
+
+.auth-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--clr-text-primary);
+}
+
+.auth-subtitle {
+    color: var(--clr-text-secondary);
+    margin-bottom: 2rem;
+}
+
+/* Floating label adjustments */
+.form-floating > label {
+    color: var(--clr-text-secondary);
+    padding-left: 1.25rem;
+}
+
+.form-floating > .form-control {
+    background-color: var(--clr-surface);
+    border: 1px solid var(--clr-border);
+    color: var(--clr-text-primary);
+    border-radius: 12px;
+}
+
+.form-floating > .form-control:focus {
+    background-color: var(--clr-surface-active);
+    border-color: var(--clr-accent);
+    box-shadow: 0 0 0 0.25rem rgba(233, 69, 96, 0.25);
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+    color: var(--clr-secondary);
+    background-color: transparent;
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+}
+
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    color: var(--clr-text-secondary);
+    text-decoration: none;
+    padding: 5px;
+    background: none;
+    border: none;
+}
+
+.password-toggle:hover {
+    color: var(--clr-text-primary);
+}
+
+/* Disclaimer Box — high visibility in BOTH themes */
+.auth-disclaimer {
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.auth-disclaimer p {
+    font-size: 0.82rem;
+    color: var(--clr-text-secondary);
+    margin-bottom: 0;
+    line-height: 1.6;
+}
+
+.auth-disclaimer strong {
+    color: var(--clr-text-primary);
+}
+
+.auth-disclaimer i {
+    color: var(--clr-success);
+}
+
+/* Custom Checkbox */
+.custom-checkbox .form-check-input {
+    background-color: var(--clr-surface);
+    border-color: var(--clr-border);
+}
+.custom-checkbox .form-check-input:checked {
+    background-color: var(--clr-accent);
+    border-color: var(--clr-accent);
+}
+
+/* Action Button */
+.btn-auth-submit {
+    background: linear-gradient(135deg, var(--clr-accent) 0%, #ff7b54 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 0.8rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
+}
+
+.btn-auth-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(233, 69, 96, 0.4);
+    color: white;
+}
+
+/* Separator */
+.auth-separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 2rem 0;
+    color: var(--clr-text-muted);
+}
+.auth-separator::before,
+.auth-separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--clr-border);
+}
+.auth-separator:not(:empty)::before {
+    margin-right: 1em;
+}
+.auth-separator:not(:empty)::after {
+    margin-left: 1em;
+}
+
+/* Animations */
+@keyframes slideUpFade {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Make sure autofill doesn't break either theme */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px var(--clr-bg-start) inset !important;
+    -webkit-text-fill-color: var(--clr-text-primary) !important;
+    transition: background-color 5000s ease-in-out 0s;
+}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order - Smart Food Delivery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="dashboard-page">
+
+    <nav class="navbar navbar-expand-lg fixed-top glass-navbar" id="main-nav">
+        <!-- ... navbar content ... -->
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <h3 class="brand-logo gradient-text m-0"><i class="fa-solid fa-burger me-2"></i>FoodRoute</h3>
+            </a>
+            <div class="d-flex align-items-center" id="nav-auth-section"></div>
+        </div>
+    </nav>
+
+    <main class="container py-5 mt-5">
+        <div class="mb-4">
+            <a href="order-history.html" class="text-decoration-none text-muted"><i class="fa-solid fa-arrow-left me-2"></i> Back to Orders</a>
+        </div>
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold m-0">Order <span class="text-primary" id="displayTrackingId">#-----</span></h2>
+            <div id="displayStatusBadge"></div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <!-- Order Tracking Timeline -->
+                <div class="glass-card p-4 mb-4">
+                    <h4 class="mb-4">Live Tracking</h4>
+                    
+                    <div class="tracking-timeline" id="trackingTimeline">
+                        <!-- Timeline injected by JS -->
+                        <div class="text-center py-4">Loading status...</div>
+                    </div>
+                </div>
+
+                <!-- Map Container -->
+                <div class="glass-card p-4 mb-4" id="trackingMapCard" style="display: none;">
+                    <h5 class="mb-3">Live Delivery Route Map</h5>
+                    <div id="orderTrackingMap" style="height: 350px; width: 100%; border-radius: 8px; overflow: hidden; z-index: 10;"></div>
+                </div>
+
+                <!-- Order Details -->
+                <div class="glass-card p-4">
+                    <h4 class="mb-4">Order Details</h4>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <h6 class="text-muted mb-1">Placed On</h6>
+                            <p id="displayOrderDate">...</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <h6 class="text-muted mb-1">Payment Method</h6>
+                            <p id="displayPaymentMethod">...</p>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <h6 class="text-muted mb-1">Delivery Address</h6>
+                            <p id="displayAddress">...</p>
+                        </div>
+                    </div>
+                    
+                    <hr class="border-secondary my-4">
+                    
+                    <h5 class="mb-3">Items</h5>
+                    <div id="displayOrderItems">
+                        <!-- Items injected by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <!-- Delivery Agent Info -->
+                <div class="glass-card p-4 mb-4" id="agentInfoCard" style="display: none;">
+                    <h5 class="mb-4 text-center">Delivery Agent</h5>
+                    <div class="text-center mb-3">
+                        <div class="agent-avatar bg-primary-subtle text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px; font-size: 2rem;">
+                            <i class="fa-solid fa-motorcycle"></i>
+                        </div>
+                        <h5 class="m-0" id="agentName">Name</h5>
+                        <p class="text-muted small mb-2"><i class="fa-solid fa-star text-warning"></i> <span id="agentRating">5.0</span></p>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <a href="#" class="btn btn-outline-primary" id="btnCallAgent"><i class="fa-solid fa-phone me-2"></i> Call Agent</a>
+                    </div>
+                </div>
+
+                <!-- Receipt -->
+                <div class="glass-card p-4">
+                    <h5 class="mb-4">Receipt</h5>
+                    
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Subtotal</span>
+                        <span class="fw-medium" id="displaySubtotal">₹0.00</span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mb-4 pb-4 border-bottom border-secondary">
+                        <span class="text-muted">Delivery & Tax</span>
+                        <span class="fw-medium" id="displayFeeAndTax">₹0.00</span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <span class="h5 m-0">Total</span>
+                        <span class="h5 m-0 text-primary-gradient fw-bold" id="displayTotal">₹0.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/order.js"></script>
+    
+    <style>
+        /* Simple tracking timeline styling */
+        .timeline-step { position: relative; padding-left: 40px; margin-bottom: 20px; }
+        .timeline-step:last-child { margin-bottom: 0; }
+        .timeline-icon { position: absolute; left: 0; top: 0; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 2; }
+        .timeline-line { position: absolute; left: 11px; top: 24px; bottom: -20px; width: 2px; background: var(--clr-border); z-index: 1; }
+        .timeline-step:last-child .timeline-line { display: none; }
+        
+        .step-completed .timeline-icon { background: var(--clr-success); color: white; }
+        .step-completed .timeline-line { background: var(--clr-success); }
+        .step-active .timeline-icon { background: var(--clr-secondary-dark); color: white; box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.2); }
+        .step-pending .timeline-icon { background: var(--clr-surface); border: 2px solid var(--clr-border); color: var(--clr-text-muted); }
+    </style>
+</body>
+</html>

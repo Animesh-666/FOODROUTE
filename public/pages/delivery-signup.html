@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Signup - Smart Food Delivery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/auth.css">
+</head>
+<body class="auth-page">
+    
+    <div class="auth-split-layout flex-row-reverse">
+        <div class="auth-brand-side" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(6, 78, 59, 0.95)), url('https://images.unsplash.com/photo-1596700678684-0744fb8a928e?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;">
+            <div class="auth-brand-content">
+                <a href="../index.html" class="text-decoration-none">
+                    <h2 class="text-white mb-5"><i class="fa-solid fa-burger me-2 text-success"></i>FoodRoute <span class="badge bg-success ms-2 fs-6">Rider</span></h2>
+                </a>
+                <h1>Become a Partner.</h1>
+                <p class="fs-5 text-light opacity-75">Join our fleet, deliver fresh food using optimized routes, and earn on your schedule.</p>
+            </div>
+        </div>
+
+        <div class="auth-form-side">
+            <div class="auth-form-wrapper" style="max-width: 500px;">
+                <div class="mobile-brand">
+                    <h2 class="brand-logo text-success m-0"><i class="fa-solid fa-motorcycle me-2"></i>Rider Join</h2>
+                </div>
+
+                <h3 class="auth-title">Agent Registration</h3>
+                <p class="auth-subtitle">Apply to join the delivery fleet.</p>
+
+                <form id="deliverySignupForm" class="needs-validation" novalidate>
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="name" placeholder="Full Name" required minlength="2">
+                                <label for="name"><i class="fa-regular fa-user me-2"></i>Full Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="tel" class="form-control" id="phone" placeholder="Phone Number" pattern="[0-9]{10}" required>
+                                <label for="phone"><i class="fa-solid fa-phone me-2"></i>Phone</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="email" placeholder="Email Address" required>
+                        <label for="email"><i class="fa-regular fa-envelope me-2"></i>Email Address</label>
+                    </div>
+
+                    <div class="form-floating mb-3 position-relative">
+                        <input type="password" class="form-control" id="password" placeholder="Password" required minlength="6">
+                        <label for="password"><i class="fa-solid fa-lock me-2"></i>Password</label>
+                        <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+
+                    <div class="form-floating mb-4 position-relative">
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
+                        <label for="confirmPassword"><i class="fa-solid fa-lock me-2"></i>Confirm Password</label>
+                        <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100 py-2 mb-3 fw-bold text-white" id="signupBtn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none;">
+                        Join Fleet <i class="fa-solid fa-motorcycle ms-2"></i>
+                    </button>
+
+                    <div class="auth-disclaimer">
+                        <p><i class="fa-solid fa-location-arrow me-2"></i><strong>Location Notice:</strong> By joining our fleet, you agree to GPS location tracking during active shifts to coordinate deliveries and optimize routes in real-time.</p>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <p class="small text-muted mb-0">Already a rider? <a href="delivery-login.html" class="text-success text-decoration-none fw-semibold">Log In Here</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/auth.js"></script>
+</body>
+</html>

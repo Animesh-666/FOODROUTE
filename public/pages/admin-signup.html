@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Signup - Smart Food Delivery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/auth.css">
+</head>
+<body class="auth-page">
+    
+    <div class="auth-split-layout flex-row-reverse">
+        <div class="auth-brand-side" style="background: linear-gradient(135deg, rgba(14, 165, 233, 0.9), rgba(15, 52, 96, 0.95)), url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;">
+            <div class="auth-brand-content">
+                <a href="../index.html" class="text-decoration-none">
+                    <h2 class="text-white mb-5"><i class="fa-solid fa-burger me-2 text-info"></i>FoodRoute <span class="badge bg-info ms-2 fs-6">Admin</span></h2>
+                </a>
+                <h1>Join Command Center.</h1>
+                <p class="fs-5 text-light opacity-75">Register as an administrator to manage routing operations.</p>
+            </div>
+        </div>
+
+        <div class="auth-form-side">
+            <div class="auth-form-wrapper" style="max-width: 500px;">
+                <div class="mobile-brand">
+                    <h2 class="brand-logo text-info m-0"><i class="fa-solid fa-burger me-2"></i>Admin Register</h2>
+                </div>
+
+                <h3 class="auth-title">Admin Registration</h3>
+                <p class="auth-subtitle">Create your high-level access account.</p>
+
+                <form id="adminSignupForm" class="needs-validation" novalidate>
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="name" placeholder="Full Name" required minlength="2">
+                                <label for="name"><i class="fa-regular fa-user me-2"></i>Full Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="tel" class="form-control" id="phone" placeholder="Phone Number" pattern="[0-9]{10}" required>
+                                <label for="phone"><i class="fa-solid fa-phone me-2"></i>Phone</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="email" placeholder="Email Address" required>
+                        <label for="email"><i class="fa-regular fa-envelope me-2"></i>Corporate Email</label>
+                    </div>
+
+                    <div class="form-floating mb-3 position-relative">
+                        <input type="password" class="form-control" id="password" placeholder="Password" required minlength="6">
+                        <label for="password"><i class="fa-solid fa-lock me-2"></i>Password</label>
+                        <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+
+                    <div class="form-floating mb-4 position-relative">
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
+                        <label for="confirmPassword"><i class="fa-solid fa-lock me-2"></i>Confirm Password</label>
+                        <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+
+                    <button type="submit" class="btn btn-info w-100 py-2 mb-3 fw-bold text-white" id="signupBtn" style="background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%); border: none;">
+                        Register Admin <i class="fa-solid fa-shield-halved ms-2"></i>
+                    </button>
+
+                    <div class="auth-disclaimer">
+                        <p><i class="fa-solid fa-circle-info me-2"></i><strong>Security Notice:</strong> Admin registration requires valid authorization. All admin accounts and actions are logged and monitored for compliance.</p>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <p class="small text-muted mb-0">Already an admin? <a href="admin-login.html" class="text-info text-decoration-none fw-semibold">Log In Here</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/auth.js"></script>
+</body>
+</html>

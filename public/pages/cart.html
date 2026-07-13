@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - Smart Food Delivery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="cart-page">
+
+    <nav class="navbar navbar-expand-lg fixed-top glass-navbar" id="main-nav">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <h3 class="brand-logo gradient-text m-0"><i class="fa-solid fa-burger me-2"></i>FoodRoute</h3>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="menu.html">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="customer-dashboard.html">Dashboard</a></li>
+                </ul>
+                <div class="d-flex align-items-center" id="nav-auth-section">
+                    <!-- Auth injected by app.js -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5 mt-5">
+        <h2 class="fw-bold mb-4">Your Cart</h2>
+        
+        <div class="row g-4">
+            <!-- Cart Items -->
+            <div class="col-lg-8">
+                <div class="glass-card p-4" id="cartItemsContainer">
+                    <!-- Loading state -->
+                    <div class="text-center py-5">
+                        <div class="spinner-border text-primary mb-3" role="status"></div>
+                        <p class="text-muted">Loading cart items...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Order Summary -->
+            <div class="col-lg-4">
+                <div class="glass-card p-4 sticky-top" style="top: 100px;">
+                    <h4 class="mb-4">Order Summary</h4>
+                    
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="text-muted">Subtotal</span>
+                        <span class="fw-medium" id="summarySubtotal">₹0.00</span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="text-muted">Delivery Fee</span>
+                        <span class="fw-medium" id="summaryDelivery">₹40.00</span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mb-3 pb-3 border-bottom border-secondary">
+                        <span class="text-muted">Taxes (5%)</span>
+                        <span class="fw-medium" id="summaryTax">₹0.00</span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mb-4">
+                        <span class="h5 m-0">Total</span>
+                        <span class="h5 m-0 text-primary-gradient fw-bold" id="summaryTotal">₹0.00</span>
+                    </div>
+                    
+                    <a href="checkout.html" class="btn btn-primary-gradient w-100 py-3 fw-bold" id="checkoutBtn" style="display: none;">
+                        Proceed to Checkout <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </a>
+                    
+                    <a href="menu.html" class="btn btn-outline-light w-100 mt-3">
+                        Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/cart.js"></script>
+</body>
+</html>

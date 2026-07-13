@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Orders - Admin Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="sidebar">
+            <!-- Sidebar content injected via JS or copied -->
+            <div class="p-3 mb-4 d-flex align-items-center justify-content-between">
+                <a href="../index.html" class="text-decoration-none">
+                    <h4 class="brand-logo gradient-text m-0"><i class="fa-solid fa-burger me-2"></i>Admin</h4>
+                </a>
+                <button class="btn btn-link text-light d-lg-none p-0" id="closeSidebarBtn">
+                    <i class="fa-solid fa-xmark fa-lg"></i>
+                </button>
+            </div>
+            
+            <ul class="nav flex-column mb-auto">
+                <li class="nav-item"><a href="admin-dashboard.html" class="nav-link"><i class="fa-solid fa-gauge-high"></i> Dashboard</a></li>
+                <li class="nav-item"><a href="admin-orders.html" class="nav-link active"><i class="fa-solid fa-clipboard-list"></i> Orders</a></li>
+                <li class="nav-item"><a href="admin-menu.html" class="nav-link"><i class="fa-solid fa-utensils"></i> Menu Items</a></li>
+                <li class="nav-item"><a href="admin-users.html" class="nav-link"><i class="fa-solid fa-users"></i> Customers</a></li>
+                <li class="nav-item"><a href="admin-agents.html" class="nav-link"><i class="fa-solid fa-motorcycle"></i> Delivery Agents</a></li>
+                <li class="nav-item"><a href="admin-analytics.html" class="nav-link"><i class="fa-solid fa-chart-line"></i> Analytics</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-dark border-secondary me-3 d-lg-none" id="toggleSidebarBtn">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <h2 class="m-0 fw-bold">Manage Orders</h2>
+                </div>
+            </div>
+
+            <div class="glass-card p-4">
+                <!-- Filters -->
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <select class="form-select form-input-themed" id="orderStatusFilter">
+                            <option value="">All Statuses</option>
+                            <option value="pending">Pending</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="preparing">Preparing</option>
+                            <option value="out_for_delivery">Out for Delivery</option>
+                            <option value="delivered">Delivered</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="col-md-8 text-end">
+                        <button class="btn btn-outline-light" onclick="fetchAdminOrders()"><i class="fa-solid fa-rotate-right me-2"></i> Refresh</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle custom-table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Delivery Agent</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminOrdersList">
+                            <tr><td colspan="7" class="text-center py-4">Loading orders...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <nav class="mt-4">
+                    <ul class="pagination justify-content-center" id="ordersPagination"></ul>
+                </nav>
+            </div>
+        </main>
+    </div>
+
+    <!-- Order Action Modal -->
+    <div class="modal fade custom-modal" id="orderActionModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-themed">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title">Manage Order <span id="modalOrderId" class="text-primary"></span></h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="actionOrderId">
+                    
+                    <div class="mb-4">
+                        <label class="form-label">Update Status</label>
+                        <div class="d-flex gap-2">
+                            <select class="form-select form-input-themed" id="updateStatusSelect">
+                                <!-- Populated dynamically -->
+                            </select>
+                            <button class="btn btn-primary" onclick="updateOrderStatus()">Update</button>
+                        </div>
+                    </div>
+                    
+                    <hr class="border-secondary">
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Assign Delivery Agent</label>
+                        <div class="d-flex gap-2">
+                            <select class="form-select form-input-themed" id="assignAgentSelect">
+                                <option value="">Select Agent...</option>
+                                <!-- Populated dynamically -->
+                            </select>
+                            <button class="btn btn-success" onclick="assignOrderAgent()">Assign</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+</html>

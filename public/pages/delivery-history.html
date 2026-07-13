@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery History - Agent Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/delivery.css">
+</head>
+<body class="delivery-app">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-delivery sticky-top">
+        <div class="container-fluid px-3">
+            <a class="navbar-brand d-flex align-items-center" href="delivery-dashboard.html">
+                <i class="fa-solid fa-arrow-left text-primary me-2"></i>
+                <span class="fw-bold fs-5">Delivery History</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container-fluid p-3 pb-5">
+        
+        <div class="row g-3 mb-4">
+            <div class="col-6">
+                <div class="glass-card p-3 text-center rounded">
+                    <h5 class="text-success m-0" id="histTotalDelivered">0</h5>
+                    <small class="text-muted">Total Delivered</small>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="glass-card p-3 text-center rounded">
+                    <h5 class="text-warning m-0" id="histTotalEarned">₹0</h5>
+                    <small class="text-muted">Total Earned</small>
+                </div>
+            </div>
+        </div>
+
+        <h6 class="fw-bold text-uppercase text-muted mb-3">Past Deliveries</h6>
+        
+        <div id="deliveryHistoryList" class="d-flex flex-column gap-3">
+            <div class="text-center py-5 glass-card rounded border border-secondary">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p class="mt-2 text-muted">Loading history...</p>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!Auth.isLoggedIn() || Auth.getUser().role !== 'delivery_agent') {
+                window.location.href = 'delivery-login.html';
+                return;
+            }
+            
+            try {
+                // Fetch dashboard data just to get stats for simplicity
+                const res = await ApiClient.get('/delivery/dashboard');
+                
+                // For a real app we'd have a /delivery/history endpoint
+                // Since this is UI building, we will simulate history based on stats
+                document.getElementById('histTotalDelivered').textContent = res.data.stats.today_deliveries;
+                document.getElementById('histTotalEarned').textContent = formatCurrency(res.data.stats.today_value);
+                
+                const list = document.getElementById('deliveryHistoryList');
+                if (res.data.stats.today_deliveries === 0) {
+                    list.innerHTML = `
+                        <div class="text-center py-5 glass-card rounded border border-secondary">
+                            <i class="fa-solid fa-box-open fa-3x text-muted mb-3"></i>
+                            <h6 style="color: var(--clr-text-primary);">No past deliveries</h6>
+                            <p class="text-muted small mb-0">Complete orders to see them here.</p>
+                        </div>
+                    `;
+                } else {
+                    // Demo data for UI fulfillment
+                    list.innerHTML = `
+                        <div class="glass-card rounded p-3 border-start border-4 border-success">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="fw-bold text-success">#FD-2025-MNO345</span>
+                                <span class="badge bg-success-subtle text-success">Delivered</span>
+                            </div>
+                            <h6 class="mb-1" style="color: var(--clr-text-primary);">Demo Customer</h6>
+                            <p class="text-muted small mb-2"><i class="fa-solid fa-clock me-1"></i> Delivered Today at 2:30 PM</p>
+                            <div class="fw-bold" style="color: var(--clr-text-primary);">₹199.00</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                showToast('Failed to load history', 'error');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+/**
+ * =================================================
+ * Delivery App Styles
+ * =================================================
+ * Specific overrides for the mobile-first delivery app interface.
+ */
+
+.delivery-app {
+    background-color: #121212; /* slightly darker for battery saving */
+}
+
+/* Mobile optimized switch */
+.delivery-app .form-switch .form-check-input {
+    width: 3em;
+    height: 1.5em;
+    cursor: pointer;
+}
+
+.delivery-app .form-switch .form-check-input:checked {
+    background-color: var(--success);
+    border-color: var(--success);
+}
+
+/* Fullscreen modal map container */
+#agentMap {
+    z-index: 1;
+}
+
+/* Floating panel in map */
+.delivery-app .modal-body .glass-card {
+    background: rgba(20, 20, 25, 0.85);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.5);
+}
