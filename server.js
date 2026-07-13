@@ -135,13 +135,7 @@ async function startServer() {
 
         // Start listening
         app.listen(PORT, () => {
-            console.log(`
-╔══════════════════════════════════════════════════╗
-║   🍔 Smart Food Delivery Route Planner          ║
-║   Server running on http://localhost:${PORT}        ║
-║   Environment: ${process.env.NODE_ENV || 'development'}                  ║
-╚══════════════════════════════════════════════════╝
-            `);
+            console.log(`Server running on ${PORT}`);
         });
     } catch (error) {
         console.error('❌ Failed to connect to database:', error.message);
