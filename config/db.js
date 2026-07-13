@@ -2,64 +2,50 @@
  * =================================================
  * Database Configuration
  * =================================================
- * 
- * MySQL connection pool using mysql2/promise.
- * Uses environment variables for configuration.
- * Connection pooling for better performance.
+ * MySQL Connection Pool using mysql2/promise
  */
 
-const mysql = require('mysql2/promise');
+require("dotenv").config();
 
-// Create connection pool with optimized settings
+const mysql = require("mysql2/promise");
+
 const pool = mysql.createPool({
-    host: process.env.DB_HOST || 'localhost',
+    host: process.env.DB_HOST,
     port: parseInt(process.env.DB_PORT) || 3306,
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'smart_food_delivery',
-    
-    // Pool configuration
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+
     waitForConnections: true,
-    connectionLimit: 10,       // Max simultaneous connections
-    queueLimit: 0,             // Unlimited queue (0 = no limit)
-    enableKeepAlive: true,     // Keep connections alive
-    keepAliveInitialDelay: 0,  // Initial delay for keep-alive
-    
-    // Timezone and charset
-    timezone: '+05:30',        // IST timezone
-    charset: 'utf8mb4',       // Support emojis and special chars
-    
-    // Date handling
-    dateStrings: true,         // Return dates as strings (not JS Date objects)
-    
-    // Debug (disable in production)
-    // debug: process.env.NODE_ENV === 'development'
+    connectionLimit: 10,
+    queueLimit: 0,
+
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 0,
+
+    charset: "utf8mb4",
+    timezone: "+05:30",
+    dateStrings: true
 });
 
 /**
- * Execute a parameterized SQL query
- * @param {string} sql - SQL query string with ? placeholders
- * @param {Array} params - Parameters to bind to placeholders
- * @returns {Promise<Array>} Query results
- * 
- * @example
- * const [users] = await db.execute('SELECT * FROM users WHERE id = ?', [1]);
+ * Test Database Connection
  */
-
-/**
- * Test the database connection
- * @returns {Promise<boolean>} True if connection successful
- */
-pool.testConnection = async function() {
+async function testConnection() {
     try {
         const connection = await pool.getConnection();
-        await connection.ping();
+
+        console.log("✅ MySQL Database Connected Successfully!");
+
         connection.release();
-        return true;
-    } catch (error) {
-        console.error('Database connection test failed:', error.message);
-        return false;
+    } catch (err) {
+        console.error("❌ Database Connection Failed!");
+        console.error(err.message);
+
+        process.exit(1);
     }
-};
+}
+
+testConnection();
 
 module.exports = pool;
