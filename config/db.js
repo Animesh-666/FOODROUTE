@@ -9,6 +9,11 @@ require("dotenv").config();
 
 const mysql = require("mysql2/promise");
 
+// Determine if connecting to a remote cloud host or localhost configuration
+const isCloudDB = process.env.DB_HOST && 
+                  !process.env.DB_HOST.includes("localhost") && 
+                  !process.env.DB_HOST.includes("127.0.0.1");
+
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
     port: parseInt(process.env.DB_PORT) || 3306,
@@ -27,10 +32,8 @@ const pool = mysql.createPool({
     timezone: "+05:30",
     dateStrings: true,
 
-    // Enforce SSL encryption matching remote cloud database requirements
-    ssl: {
-        rejectUnauthorized: false
-    }
+    // Dynamically apply SSL parameters depending on the host deployment target
+    ssl: isCloudDB ? { rejectUnauthorized: false } : false
 });
 
 /**
