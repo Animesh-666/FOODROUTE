@@ -66,6 +66,39 @@ app.use(express.static(path.join(__dirname, 'public')));
 // API ROUTES
 // =================================================
 
+// Debug Database Connection Endpoint
+app.get('/api/debug-db', async (req, res) => {
+    try {
+        const [tables] = await db.query("SHOW TABLES");
+        const tableList = tables.map(t => Object.values(t)[0]);
+        
+        let foodCount = 0;
+        if (tableList.includes('food_items')) {
+            const [countRows] = await db.query("SELECT COUNT(*) as count FROM food_items");
+            foodCount = countRows[0].count;
+        }
+
+        res.json({
+            success: true,
+            message: "Database connection active",
+            config: {
+                host: process.env.DB_HOST,
+                database: process.env.DB_NAME,
+                user: process.env.DB_USER
+            },
+            tables: tableList,
+            food_items_count: foodCount
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Database check failed",
+            error: err.message,
+            stack: err.stack
+        });
+    }
+});
+
 // Authentication routes (signup, login, profile)
 app.use('/api/auth', authRoutes);
 
