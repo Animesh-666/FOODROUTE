@@ -21,7 +21,14 @@ const signup = async (req, res, next) => {
     await connection.beginTransaction();
 
     try {
-        const { name, email, password, phone, address, role = 'customer' } = req.body;
+        let { name, email, password, phone, address, role } = req.body;
+
+        // Ensure role is explicitly formatted to match standard ENUM variants
+        if (!role || typeof role !== 'string' || role.trim() === '') {
+            role = 'customer';
+        } else {
+            role = role.trim().toLowerCase();
+        }
 
         // Check if user already exists
         const existingUser = await User.findByEmail(email);
@@ -38,12 +45,18 @@ const signup = async (req, res, next) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
+        // Sanitize database input strings to prevent schema constraint failure
+        const insertName = name && typeof name === 'string' ? name.trim() : '';
+        const insertEmail = email && typeof email === 'string' ? email.trim() : '';
+        const insertPhone = phone && typeof phone === 'string' && phone.trim() !== '' ? phone.trim() : null;
+        const insertAddress = address && typeof address === 'string' && address.trim() !== '' ? address.trim() : null;
+
         // 1. Create user record
         const [userResult] = await connection.execute(
             `INSERT INTO users 
             (name, email, password, phone, address, role) 
             VALUES (?, ?, ?, ?, ?, ?)`,
-            [name, email, hashedPassword, phone || null, address || null, role]
+            [insertName, insertEmail, hashedPassword, insertPhone, insertAddress, role]
         );
 
         const insertId = userResult.insertId;
@@ -59,7 +72,7 @@ const signup = async (req, res, next) => {
         await connection.commit();
 
         // Generate token with correct role
-        const user = { id: insertId, name, email, role };
+        const user = { id: insertId, name: insertName, email: insertEmail, role };
         const token = generateToken(user);
 
         res.status(201).json({
