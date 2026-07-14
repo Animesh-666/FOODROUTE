@@ -112,8 +112,8 @@ async function fetchAdminOrders() {
     list.innerHTML = `<tr><td colspan="7" class="text-center py-4"><div class="spinner-border text-primary" role="status"></div></td></tr>`;
 
     try {
-        // FIXED: Replaced old redundant requests and aligned endpoint pathing with app.use('/api/admin', adminRoutes)
-        const res = await ApiClient.get(`/admin/orders?page=${currentOrdersPage}&limit=10&status=${status}`);
+        // Corrected to use the standard order module admin endpoint
+        const res = await ApiClient.get(`/orders/all?page=${currentOrdersPage}&limit=10&status=${status}`);
         
         if (!res.data || res.data.length === 0) {
             list.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-muted">No orders found.</td></tr>`;
@@ -193,8 +193,7 @@ window.updateOrderStatus = async function() {
     const status = document.getElementById('updateStatusSelect').value;
     
     try {
-        // FIXED: Routed order status updates correctly under the admin management namespace
-        await ApiClient.put(`/admin/orders/${orderId}/status`, { status });
+        await ApiClient.put(`/orders/${orderId}/status`, { status });
         showToast('Order status updated successfully', 'success');
         adminOrderModal.hide();
         fetchAdminOrders();
@@ -213,8 +212,7 @@ window.assignOrderAgent = async function() {
     }
     
     try {
-        // FIXED: Routed rider assignments correctly under the admin management namespace
-        await ApiClient.put(`/admin/orders/${orderId}/assign`, { agent_id: agentId });
+        await ApiClient.put(`/orders/${orderId}/assign`, { agent_id: agentId });
         showToast('Agent assigned successfully', 'success');
         adminOrderModal.hide();
         fetchAdminOrders();
