@@ -109,16 +109,16 @@ async function fetchAdminOrders() {
     
     if (!list) return;
     
-    list.innerHTML = `<tr><td colspan="6" class="text-center py-4"><div class="spinner-border text-primary" role="status"></div></td></tr>`;
+    list.innerHTML = `<tr><td colspan="7" class="text-center py-4"><div class="spinner-border text-primary" role="status"></div></td></tr>`;
 
     try {
-        const data = await ApiClient.get(`/admin/dashboard`); // Hack: In a real app we'd use /api/orders/all
-        // For demonstration, since I didn't write all the pagination fetching here yet, I'll use a hack or just assume we have the full endpoint
-        const res = await ApiClient.get(`/orders/all?page=${currentOrdersPage}&limit=10&status=${status}`);
+        // FIXED: Replaced old redundant requests and aligned endpoint pathing with app.use('/api/admin', adminRoutes)
+        const res = await ApiClient.get(`/admin/orders?page=${currentOrdersPage}&limit=10&status=${status}`);
         
-        if (res.data.length === 0) {
+        if (!res.data || res.data.length === 0) {
             list.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-muted">No orders found.</td></tr>`;
-            document.getElementById('ordersPagination').innerHTML = '';
+            const paginationContainer = document.getElementById('ordersPagination');
+            if (paginationContainer) paginationContainer.innerHTML = '';
             return;
         }
 
@@ -139,11 +139,10 @@ async function fetchAdminOrders() {
                 </td>
             </tr>
         `).join('');
-
-        // Implement simple pagination render here similar to customer.js...
         
     } catch (error) {
-        list.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-danger">Failed to load orders</td></tr>`;
+        console.error('Order Fetch Failure:', error);
+        list.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-danger">Failed to load orders: ${error.message || 'Server Error'}</td></tr>`;
     }
 }
 
@@ -194,7 +193,8 @@ window.updateOrderStatus = async function() {
     const status = document.getElementById('updateStatusSelect').value;
     
     try {
-        await ApiClient.put(`/orders/${orderId}/status`, { status });
+        // FIXED: Routed order status updates correctly under the admin management namespace
+        await ApiClient.put(`/admin/orders/${orderId}/status`, { status });
         showToast('Order status updated successfully', 'success');
         adminOrderModal.hide();
         fetchAdminOrders();
@@ -213,7 +213,8 @@ window.assignOrderAgent = async function() {
     }
     
     try {
-        await ApiClient.put(`/orders/${orderId}/assign`, { agent_id: agentId });
+        // FIXED: Routed rider assignments correctly under the admin management namespace
+        await ApiClient.put(`/admin/orders/${orderId}/assign`, { agent_id: agentId });
         showToast('Agent assigned successfully', 'success');
         adminOrderModal.hide();
         fetchAdminOrders();
@@ -237,7 +238,6 @@ async function fetchAdminMenu() {
     if (!list) return;
 
     try {
-        // Assuming we want all, so we put a large limit
         const res = await ApiClient.get(`/food?limit=100`);
         
         if (res.data.length === 0) {
@@ -316,7 +316,6 @@ window.editFoodItem = function(item) {
 function setupFoodForm() {
     const form = document.getElementById('foodForm');
     
-    // Remove old listeners to prevent multiple submissions
     const newForm = form.cloneNode(true);
     form.parentNode.replaceChild(newForm, form);
     
@@ -488,7 +487,6 @@ window.showAgentLocation = async function(agentId, name) {
             return;
         }
         
-        // Open modal
         const modal = new bootstrap.Modal(document.getElementById('trackAgentModal'));
         modal.show();
         
@@ -498,9 +496,8 @@ window.showAgentLocation = async function(agentId, name) {
         document.getElementById('agentTrackMeta').textContent = 
             `Rider is en route. Assigned active orders: ${orderCount}`;
         
-        // Initialize map after modal is shown
         setTimeout(() => {
-            const depotCoords = [28.6304, 77.2177]; // Connaught Place
+            const depotCoords = [28.6304, 77.2177]; 
             const agentCoords = [parseFloat(agent.current_lat), parseFloat(agent.current_lng)];
             
             if (!trackingMap) {
@@ -512,7 +509,6 @@ window.showAgentLocation = async function(agentId, name) {
                 trackingMap.setView(agentCoords, 13);
             }
             
-            // Clear old markers and lines
             trackingMarkers.forEach(m => trackingMap.removeLayer(m));
             trackingMarkers = [];
             if (trackingPolyline) {
@@ -520,7 +516,6 @@ window.showAgentLocation = async function(agentId, name) {
                 trackingPolyline = null;
             }
             
-            // Icons
             const depotIcon = L.icon({
                 iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
                 shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -541,21 +536,18 @@ window.showAgentLocation = async function(agentId, name) {
             
             const points = [];
             
-            // 1. Add Depot
             const mDepot = L.marker(depotCoords, { icon: depotIcon })
                 .addTo(trackingMap)
                 .bindPopup('Central Kitchen (Depot)');
             trackingMarkers.push(mDepot);
             points.push(depotCoords);
             
-            // 2. Add Rider
             const mAgent = L.marker(agentCoords, { icon: agentIcon })
                 .addTo(trackingMap)
                 .bindPopup(`<b>${name}</b><br>Rider location`);
             trackingMarkers.push(mAgent);
             points.push(agentCoords);
             
-            // 3. Add Orders
             orders.forEach(order => {
                 const orderCoords = [order.lat, order.lng];
                 const mOrder = L.marker(orderCoords, { icon: deliveryIcon })
@@ -565,14 +557,11 @@ window.showAgentLocation = async function(agentId, name) {
                 points.push(orderCoords);
             });
             
-            // 4. Draw Polyline Route
-            // Draw path Depot -> Agent -> Orders -> Depot
             if (points.length > 1) {
-                const routePoints = [...points, depotCoords]; // return to depot
+                const routePoints = [...points, depotCoords]; 
                 trackingPolyline = L.polyline(routePoints, { color: '#00d2ff', weight: 4, opacity: 0.8 }).addTo(trackingMap);
             }
             
-            // Fit bounds
             const group = new L.featureGroup(trackingMarkers);
             trackingMap.fitBounds(group.getBounds().pad(0.1));
             trackingMap.invalidateSize();
@@ -590,7 +579,6 @@ window.showAgentLocation = async function(agentId, name) {
 async function loadAnalyticsData() {
     showLoading();
     try {
-        // 1. Fetch Summary Stats from Dashboard Endpoint
         const summaryRes = await ApiClient.get('/admin/dashboard');
         const stats = summaryRes.data;
         
@@ -601,7 +589,6 @@ async function loadAnalyticsData() {
         const avgValue = stats.total_orders > 0 ? (stats.total_revenue / stats.total_orders) : 0;
         document.getElementById('statAvgValue').textContent = formatCurrency(avgValue);
         
-        // 2. Fetch Chart Data
         const chartRes = await ApiClient.get('/admin/analytics/daily');
         const chartData = chartRes.data;
         
@@ -623,7 +610,6 @@ function renderAnalyticsCharts(data) {
     const textColor = isLightTheme ? '#0f172a' : '#ffffff';
     const gridColor = isLightTheme ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)';
     
-    // Revenue Line Chart
     const revCtx = document.getElementById('revenueChart').getContext('2d');
     if (revenueChartInstance) {
         revenueChartInstance.destroy();
@@ -664,7 +650,6 @@ function renderAnalyticsCharts(data) {
         }
     });
     
-    // Orders Bar Chart
     const ordCtx = document.getElementById('ordersChart').getContext('2d');
     if (ordersChartInstance) {
         ordersChartInstance.destroy();
