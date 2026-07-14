@@ -29,6 +29,65 @@ const pool = mysql.createPool({
 });
 
 /**
+ * Auto-initialize Database Schema if empty
+ */
+async function initDatabaseSchema() {
+    try {
+        // Check if users table exists
+        const [tables] = await pool.query("SHOW TABLES LIKE 'users'");
+        if (tables.length > 0) {
+            console.log("ℹ️ Database schema already initialized.");
+            return;
+        }
+
+        console.log("⚠️ Database schema not initialized. Initializing now...");
+        
+        const fs = require('fs');
+        const path = require('path');
+        const sqlPath = path.join(__dirname, '..', 'database', 'schema.sql');
+        
+        if (!fs.existsSync(sqlPath)) {
+            console.error("❌ Schema file not found at:", sqlPath);
+            return;
+        }
+
+        let sql = fs.readFileSync(sqlPath, 'utf8');
+        
+        // Remove comments
+        sql = sql.replace(/--.*$/gm, '');
+        
+        // Split statements by semicolon
+        const statements = sql
+            .split(';')
+            .map(s => s.trim())
+            .filter(s => {
+                if (!s) return false;
+                const lower = s.toLowerCase();
+                if (lower.startsWith('create database') || lower.startsWith('use ')) return false;
+                return true;
+            });
+
+        const connection = await pool.getConnection();
+        await connection.beginTransaction();
+
+        try {
+            for (let statement of statements) {
+                await connection.query(statement);
+            }
+            await connection.commit();
+            console.log("✅ Database schema initialized successfully with seed data!");
+        } catch (err) {
+            await connection.rollback();
+            console.error("❌ Failed to initialize database schema:", err.message);
+        } finally {
+            connection.release();
+        }
+    } catch (err) {
+        console.error("❌ Error checking/initializing database:", err.message);
+    }
+}
+
+/**
  * Test Database Connection
  */
 async function testConnection() {
@@ -38,6 +97,9 @@ async function testConnection() {
         console.log("✅ MySQL Database Connected Successfully!");
 
         connection.release();
+
+        // Run auto-init
+        await initDatabaseSchema();
     } catch (err) {
         console.error("❌ Database Connection Failed!");
         console.error(err.message);
