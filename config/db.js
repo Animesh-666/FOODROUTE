@@ -25,7 +25,12 @@ const pool = mysql.createPool({
 
     charset: "utf8mb4",
     timezone: "+05:30",
-    dateStrings: true
+    dateStrings: true,
+
+    // Enforce SSL encryption matching remote cloud database requirements
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
 
 /**
