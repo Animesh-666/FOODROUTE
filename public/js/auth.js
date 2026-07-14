@@ -56,18 +56,40 @@ function redirectBasedOnRole(role) {
  */
 window.togglePassword = function(inputId) {
     const input = document.getElementById(inputId);
-    const icon = input.nextElementSibling.nextElementSibling.querySelector('i');
+    if (!input) return;
+    
+    const iconContainer = input.nextElementSibling?.nextElementSibling || input.parentElement?.querySelector('.fa-eye, .fa-eye-slash');
+    const icon = iconContainer ? (iconContainer.tagName === 'I' ? iconContainer : iconContainer.querySelector('i')) : null;
     
     if (input.type === 'password') {
         input.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
+        if (icon) {
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        }
     } else {
         input.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
+        if (icon) {
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
     }
 };
+
+/**
+ * Helper to safely extract error message from API client rejections
+ */
+function handleApiError(error, defaultMessage) {
+    console.error(error);
+    if (error.response && error.response.data) {
+        const data = error.response.data;
+        if (data.errors && data.errors.length > 0) {
+            return data.errors[0].message;
+        }
+        return data.message || defaultMessage;
+    }
+    return error.message || defaultMessage;
+}
 
 /**
  * Handle Standard Login
@@ -85,9 +107,9 @@ function setupLoginForm() {
             return;
         }
 
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const btn = document.getElementById('loginBtn');
+        const email = loginForm.querySelector('#email').value;
+        const password = loginForm.querySelector('#password').value;
+        const btn = loginForm.querySelector('#loginBtn') || document.getElementById('loginBtn');
         
         const originalText = btn.innerHTML;
         btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Logging in...';
@@ -106,6 +128,8 @@ function setupLoginForm() {
         } catch (error) {
             btn.innerHTML = originalText;
             btn.disabled = false;
+            const errMsg = handleApiError(error, 'Login failed. Please check your credentials.');
+            showToast(errMsg, 'error');
         }
     });
 }
@@ -126,9 +150,9 @@ function setupAdminLoginForm() {
             return;
         }
 
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const btn = document.getElementById('loginBtn');
+        const email = adminForm.querySelector('#email').value;
+        const password = adminForm.querySelector('#password').value;
+        const btn = adminForm.querySelector('#loginBtn') || document.getElementById('loginBtn');
         
         const originalText = btn.innerHTML;
         btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Verifying...';
@@ -155,6 +179,8 @@ function setupAdminLoginForm() {
         } catch (error) {
             btn.innerHTML = originalText;
             btn.disabled = false;
+            const errMsg = handleApiError(error, 'Admin authorization failed.');
+            showToast(errMsg, 'error');
         }
     });
 }
@@ -175,9 +201,9 @@ function setupDeliveryLoginForm() {
             return;
         }
 
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const btn = document.getElementById('loginBtn');
+        const email = deliveryForm.querySelector('#email').value;
+        const password = deliveryForm.querySelector('#password').value;
+        const btn = deliveryForm.querySelector('#loginBtn') || document.getElementById('loginBtn');
         
         const originalText = btn.innerHTML;
         btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Verifying...';
@@ -204,6 +230,8 @@ function setupDeliveryLoginForm() {
         } catch (error) {
             btn.innerHTML = originalText;
             btn.disabled = false;
+            const errMsg = handleApiError(error, 'Agent authorization failed.');
+            showToast(errMsg, 'error');
         }
     });
 }
@@ -215,17 +243,18 @@ function setupSignupForm() {
     const signupForm = document.getElementById('signupForm');
     if (!signupForm) return;
 
-    // Password match validation
-    const password = document.getElementById('password');
-    const confirmPassword = document.getElementById('confirmPassword');
+    const password = signupForm.querySelector('#password');
+    const confirmPassword = signupForm.querySelector('#confirmPassword');
     
-    confirmPassword.addEventListener('input', () => {
-        if (password.value !== confirmPassword.value) {
-            confirmPassword.setCustomValidity('Passwords do not match');
-        } else {
-            confirmPassword.setCustomValidity('');
-        }
-    });
+    if (confirmPassword && password) {
+        confirmPassword.addEventListener('input', () => {
+            if (password.value !== confirmPassword.value) {
+                confirmPassword.setCustomValidity('Passwords do not match');
+            } else {
+                confirmPassword.setCustomValidity('');
+            }
+        });
+    }
 
     signupForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -236,11 +265,11 @@ function setupSignupForm() {
             return;
         }
 
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
+        const name = signupForm.querySelector('#name').value;
+        const email = signupForm.querySelector('#email').value;
+        const phone = signupForm.querySelector('#phone').value;
         const passwordValue = password.value;
-        const btn = document.getElementById('signupBtn');
+        const btn = signupForm.querySelector('#signupBtn') || document.getElementById('signupBtn');
         
         const originalText = btn.innerHTML;
         btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Creating Account...';
@@ -251,7 +280,7 @@ function setupSignupForm() {
                 name, 
                 email, 
                 password: passwordValue,
-                phone,
+                phone: phone || undefined,
                 role: 'customer'
             });
             
@@ -265,6 +294,8 @@ function setupSignupForm() {
         } catch (error) {
             btn.innerHTML = originalText;
             btn.disabled = false;
+            const errMsg = handleApiError(error, 'Registration failed.');
+            showToast(errMsg, 'error');
         }
     });
 }
@@ -276,16 +307,18 @@ function setupAdminSignupForm() {
     const signupForm = document.getElementById('adminSignupForm');
     if (!signupForm) return;
 
-    const password = document.getElementById('password');
-    const confirmPassword = document.getElementById('confirmPassword');
+    const password = signupForm.querySelector('#password');
+    const confirmPassword = signupForm.querySelector('#confirmPassword');
     
-    confirmPassword.addEventListener('input', () => {
-        if (password.value !== confirmPassword.value) {
-            confirmPassword.setCustomValidity('Passwords do not match');
-        } else {
-            confirmPassword.setCustomValidity('');
-        }
-    });
+    if (confirmPassword && password) {
+        confirmPassword.addEventListener('input', () => {
+            if (password.value !== confirmPassword.value) {
+                confirmPassword.setCustomValidity('Passwords do not match');
+            } else {
+                confirmPassword.setCustomValidity('');
+            }
+        });
+    }
 
     signupForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -296,11 +329,11 @@ function setupAdminSignupForm() {
             return;
         }
 
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
+        const name = signupForm.querySelector('#name').value;
+        const email = signupForm.querySelector('#email').value;
+        const phone = signupForm.querySelector('#phone').value;
         const passwordValue = password.value;
-        const btn = document.getElementById('signupBtn');
+        const btn = signupForm.querySelector('#signupBtn') || document.getElementById('signupBtn');
         
         const originalText = btn.innerHTML;
         btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Creating Admin...';
@@ -311,7 +344,7 @@ function setupAdminSignupForm() {
                 name, 
                 email, 
                 password: passwordValue,
-                phone,
+                phone: phone || undefined,
                 role: 'admin'
             });
             
@@ -325,6 +358,8 @@ function setupAdminSignupForm() {
         } catch (error) {
             btn.innerHTML = originalText;
             btn.disabled = false;
+            const errMsg = handleApiError(error, 'Admin registration failed.');
+            showToast(errMsg, 'error');
         }
     });
 }
@@ -336,16 +371,18 @@ function setupDeliverySignupForm() {
     const signupForm = document.getElementById('deliverySignupForm');
     if (!signupForm) return;
 
-    const password = document.getElementById('password');
-    const confirmPassword = document.getElementById('confirmPassword');
+    const password = signupForm.querySelector('#password');
+    const confirmPassword = signupForm.querySelector('#confirmPassword');
     
-    confirmPassword.addEventListener('input', () => {
-        if (password.value !== confirmPassword.value) {
-            confirmPassword.setCustomValidity('Passwords do not match');
-        } else {
-            confirmPassword.setCustomValidity('');
-        }
-    });
+    if (confirmPassword && password) {
+        confirmPassword.addEventListener('input', () => {
+            if (password.value !== confirmPassword.value) {
+                confirmPassword.setCustomValidity('Passwords do not match');
+            } else {
+                confirmPassword.setCustomValidity('');
+            }
+        });
+    }
 
     signupForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -356,11 +393,11 @@ function setupDeliverySignupForm() {
             return;
         }
 
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
+        const name = signupForm.querySelector('#name').value;
+        const email = signupForm.querySelector('#email').value;
+        const phone = signupForm.querySelector('#phone').value;
         const passwordValue = password.value;
-        const btn = document.getElementById('signupBtn');
+        const btn = signupForm.querySelector('#signupBtn') || document.getElementById('signupBtn');
         
         const originalText = btn.innerHTML;
         btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Creating Account...';
@@ -371,7 +408,7 @@ function setupDeliverySignupForm() {
                 name, 
                 email, 
                 password: passwordValue,
-                phone,
+                phone: phone || undefined,
                 role: 'delivery_agent'
             });
             
@@ -385,7 +422,8 @@ function setupDeliverySignupForm() {
         } catch (error) {
             btn.innerHTML = originalText;
             btn.disabled = false;
+            const errMsg = handleApiError(error, 'Agent registration failed.');
+            showToast(errMsg, 'error');
         }
     });
 }
-
