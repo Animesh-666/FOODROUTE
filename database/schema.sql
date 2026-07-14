@@ -137,7 +137,7 @@ CREATE TABLE orders (
 CREATE TABLE order_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
-    food_id INT NOT NULL,
+    food_id INT DEFAULT NULL,
     quantity INT NOT NULL,
     price DECIMAL(10, 2) NOT NULL,             -- price at time of order
     food_name VARCHAR(150) NOT NULL,           -- name snapshot
