@@ -27,7 +27,7 @@ module.exports = {
     // Order status flow (valid transitions)
     ORDER_STATUS_FLOW: {
         pending: ['confirmed', 'cancelled'],
-        confirmed: ['preparing', 'cancelled'],
+        confirmed: ['preparing', 'out_for_delivery', 'cancelled'],
         preparing: ['out_for_delivery', 'cancelled'],
         out_for_delivery: ['delivered'],
         delivered: [],

@@ -22,13 +22,20 @@ const getDashboard = async (req, res, next) => {
             return res.status(404).json({ success: false, message: 'Agent profile not found' });
         }
         
-        // Get active orders (assigned to this agent, status 'out_for_delivery')
+        // Get active orders (assigned to this agent, status 'confirmed', 'preparing', 'out_for_delivery')
         const [activeOrders] = await db.execute(`
-            SELECT id, tracking_id, delivery_address, delivery_lat, delivery_lng, 
-                   total_amount, payment_method, customer_name, customer_phone, items_summary
-            FROM orders
-            WHERE agent_id = ? AND status = 'out_for_delivery'
+            SELECT o.id, o.tracking_id, o.status, o.delivery_address, o.delivery_lat, o.delivery_lng, 
+                   o.total_amount, o.payment_method, u.name AS customer_name, u.phone AS customer_phone
+            FROM orders o
+            JOIN users u ON o.user_id = u.id
+            WHERE o.agent_id = ? AND o.status IN ('confirmed', 'preparing', 'out_for_delivery')
         `, [agent.id]);
+
+        // Add items_summary for each active order
+        for (let order of activeOrders) {
+            const [items] = await db.execute('SELECT quantity, food_name FROM order_items WHERE order_id = ?', [order.id]);
+            order.items_summary = items.map(i => `${i.quantity}x ${i.food_name}`).join(', ');
+        }
         
         // Get today's stats
         const [todayStats] = await db.execute(`

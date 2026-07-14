@@ -170,8 +170,8 @@ const registerAgent = async (req, res, next) => {
         
         // 2. Create agent record
         await connection.execute(
-            'INSERT INTO delivery_agents (user_id, vehicle_type, vehicle_number) VALUES (?, ?, ?)',
-            [userId, vehicle_type, vehicle_number]
+            'INSERT INTO delivery_agents (user_id, vehicle_type) VALUES (?, ?)',
+            [userId, vehicle_type || 'bike']
         );
         
         await connection.commit();

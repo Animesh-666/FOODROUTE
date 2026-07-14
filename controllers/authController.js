@@ -10,17 +10,23 @@ const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const { generateToken } = require('../utils/helpers');
 
+const db = require('../config/db');
+
 /**
- * Register a new customer
+ * Register a new user
  * POST /api/auth/signup
  */
 const signup = async (req, res, next) => {
+    const connection = await db.getConnection();
+    await connection.beginTransaction();
+
     try {
-        const { name, email, password, phone, address } = req.body;
+        const { name, email, password, phone, address, role = 'customer' } = req.body;
 
         // Check if user already exists
         const existingUser = await User.findByEmail(email);
         if (existingUser) {
+            connection.release();
             return res.status(409).json({
                 success: false,
                 message: 'An account with this email already exists.',
@@ -32,18 +38,28 @@ const signup = async (req, res, next) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        // Create user (role defaults to 'customer' if not provided)
-        const insertId = await User.create({
-            name,
-            email,
-            password: hashedPassword,
-            phone,
-            address,
-            role: req.body.role || 'customer'
-        });
+        // 1. Create user record
+        const [userResult] = await connection.execute(
+            `INSERT INTO users 
+            (name, email, password, phone, address, role) 
+            VALUES (?, ?, ?, ?, ?, ?)`,
+            [name, email, hashedPassword, phone || null, address || null, role]
+        );
 
-        // Generate token
-        const user = { id: insertId, name, email, role: 'customer' };
+        const insertId = userResult.insertId;
+
+        // 2. If registering as a delivery agent, create delivery agent record
+        if (role === 'delivery_agent') {
+            await connection.execute(
+                'INSERT INTO delivery_agents (user_id, vehicle_type, vehicle_number) VALUES (?, ?, ?)',
+                [insertId, 'bike', 'N/A']
+            );
+        }
+
+        await connection.commit();
+
+        // Generate token with correct role
+        const user = { id: insertId, name, email, role };
         const token = generateToken(user);
 
         res.status(201).json({
@@ -54,7 +70,10 @@ const signup = async (req, res, next) => {
         });
 
     } catch (error) {
+        await connection.rollback();
         next(error);
+    } finally {
+        connection.release();
     }
 };
 

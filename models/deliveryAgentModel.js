@@ -28,7 +28,7 @@ class DeliveryAgent {
      */
     static async updateLocation(agentId, lat, lng) {
         const [result] = await db.execute(
-            'UPDATE delivery_agents SET current_lat = ?, current_lng = ?, last_location_update = NOW() WHERE id = ?',
+            'UPDATE delivery_agents SET current_lat = ?, current_lng = ? WHERE id = ?',
             [lat, lng, agentId]
         );
         return result.affectedRows > 0;
