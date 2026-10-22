@@ -3,8 +3,10 @@ on:
   push:
     branches: [main]
   pull_request:
+
 permissions:
   contents: read
+
 jobs:
   source-and-security:
     runs-on: ubuntu-latest
@@ -15,20 +17,20 @@ jobs:
           node-version: '22'
       - run: node scripts/phase7-audit.cjs
       - run: node --test tests/phase7-release.test.cjs
+
   web:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: apps/web
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: npm
-          cache-dependency-path: apps/web/package-lock.json
+          cache-dependency-path: package-lock.json
+      # Frontend is an npm workspace: the lockfile is at repo root.
       - run: npm ci
-      - run: npm run test:ci
+      - run: npm run test:ci --workspace apps/web
+
   backend:
     runs-on: ubuntu-latest
     defaults:
@@ -44,20 +46,20 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm run test:release
+
   routing-engine:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: packages/routing-engine
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: npm
-          cache-dependency-path: packages/routing-engine/package-lock.json
+          cache-dependency-path: package-lock.json
+      # Root workspace provides the TypeScript compiler used by routing-engine.
       - run: npm ci
-      - run: npm test
+      - run: npm test --workspace packages/routing-engine
+
   firestore-rules:
     runs-on: ubuntu-latest
     steps:
@@ -70,6 +72,5 @@ jobs:
           distribution: temurin
           java-version: '21'
       - run: npm ci
-        working-directory: apps/web
       - name: Emulator rules regression
         run: npx --yes firebase-tools@14 emulators:exec --config firebase.phase7.example.json --only firestore --project demo-foodroute-phase3 "npm --prefix apps/web run test:rules"

@@ -1,0 +1,72 @@
+name: Publish FOODROUTE v2.0.0
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'Type RELEASE to publish v2.0.0 after main CI passes'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: foodroute-v2.0.0-release
+  cancel-in-progress: false
+
+jobs:
+  verify-and-publish:
+    # A versioned release is published only from main and only after explicit confirmation.
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirm user action
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          if [ "$CONFIRMATION" != "RELEASE" ]; then
+            echo 'Type RELEASE in the workflow input to confirm publication.' >&2
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Install npm workspaces
+        run: npm ci
+      - name: Security / source audit
+        run: |
+          node scripts/phase7-audit.cjs
+          node --test tests/phase7-release.test.cjs
+      - name: Frontend tests and build
+        run: npm run test:ci --workspace apps/web
+      - name: Backend tests
+        run: npm run test:release --workspace services/functions
+      - name: Routing algorithm tests
+        run: npm test --workspace packages/routing-engine
+      - name: Firestore rules emulator tests
+        run: npx --yes firebase-tools@14 emulators:exec --config firebase.phase7.example.json --only firestore --project demo-foodroute-phase3 "npm --prefix apps/web run test:rules"
+      - name: Publish version tag and GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v2.0.0 > /dev/null 2>&1; then
+            echo 'Release v2.0.0 already exists; refusing to overwrite.' >&2
+            exit 1
+          fi
+          if git ls-remote --exit-code --tags origin refs/tags/v2.0.0 > /dev/null 2>&1; then
+            echo 'Tag v2.0.0 already exists; refusing to move it.' >&2
+            exit 1
+          fi
+          gh release create v2.0.0 \
+            --target "$GITHUB_SHA" \
+            --title 'FOODROUTE 2.0 — v2.0.0 (Demo Release)' \
+            --notes-file docs/RELEASE_NOTES_v2.0.0.md \
+            --latest
