@@ -1,0 +1,26 @@
+{
+  "name": "@foodroute/functions",
+  "version": "0.6.0",
+  "private": true,
+  "main": "lib/index.js",
+  "engines": {
+    "node": "22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "dev:api": "npm run build && node lib/orders/dev-server.js",
+    "test:live": "npm run build && node --test tests/live-order-validation.test.cjs",
+    "test:optimized": "npm run build && node --test tests/optimized-dispatch.test.cjs tests/optimized-backend.test.cjs",
+    "start:production": "node lib/orders/prod-server.js",
+    "test:release": "npm run test:optimized && npm run test:live"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.0.0",
+    "firebase-functions": "^6.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0",
+    "@types/node": "^22.0.0"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "@foodroute/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Structure-only scaffold; dependencies and build scripts pending"
+}

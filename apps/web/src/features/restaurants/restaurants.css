@@ -1,0 +1,35 @@
+.restaurant-page{min-height:100dvh;background:var(--paper);color:var(--ink)}
+.restaurant-top{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:23px max(5%,calc((100vw - 1270px)/2));border-bottom:1px solid var(--line)}
+.restaurant-brand{font-size:25px;font-weight:850;letter-spacing:-1.1px;color:var(--ink);text-decoration:none;white-space:nowrap}.restaurant-brand span{color:var(--orange)}
+.restaurant-top nav{display:flex;gap:20px;align-items:center}.restaurant-top a{font-weight:700;font-size:13px}.restaurant-top nav a:hover{color:var(--orange)}
+.restaurant-container{max-width:1270px;padding:55px 5% 90px;margin:0 auto}.restaurant-intro{max-width:800px;margin-bottom:38px}
+.restaurant-intro h1{font-size:clamp(46px,7.3vw,94px);letter-spacing:-.075em;line-height:1.05;margin:19px 0}.restaurant-intro h1 em{color:var(--orange);font-family:Georgia,serif;font-weight:500}
+.restaurant-intro>p:last-child{font-size:15px;color:var(--muted);line-height:1.8;max-width:650px}
+.restaurant-field,.restaurant-form label{font-size:12px;font-weight:750;display:flex;flex-direction:column;gap:8px}
+.restaurant-field input,.restaurant-field select,.restaurant-form input:not([type=checkbox]),.restaurant-form select,.restaurant-form textarea,.auth-form textarea{width:100%;padding:14px 15px;border:1px solid #dcdccf;border-radius:12px;background:#fffefa;color:var(--ink);font:inherit;min-height:47px}
+.restaurant-field input:focus,.restaurant-field select:focus,.restaurant-form input:focus,.restaurant-form select:focus,.restaurant-form textarea:focus,.auth-form textarea:focus{outline:2px solid var(--orange);outline-offset:2px}
+.restaurant-field{max-width:450px}.restaurant-toolbar{display:flex;align-items:end;gap:14px;flex-wrap:wrap;margin-bottom:18px}.restaurant-toolbar .restaurant-field{flex:1;min-width:185px}
+.restaurant-grid,.restaurant-menu-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:27px}
+.restaurant-tile,.restaurant-food,.restaurant-panel{background:#fffcf7;border:1px solid #e6e1d7;border-radius:24px;padding:22px;box-shadow:0 13px 37px #49352208}
+.restaurant-tile{display:flex;flex-direction:column;text-decoration:none;color:var(--ink);transition:transform .25s ease,box-shadow .25s ease}.restaurant-tile:hover,.restaurant-tile:focus-visible{transform:translateY(-5px);box-shadow:0 20px 50px #49352215}
+.restaurant-tile-visual{height:150px;background:radial-gradient(circle,#e7ebd9,#f4ece0);border-radius:15px;display:grid;place-items:center;color:var(--orange);font-size:67px;margin-bottom:20px}
+.restaurant-tile h2,.restaurant-food h2{font-size:24px;letter-spacing:-.045em;line-height:1.15;margin:12px 0}
+.restaurant-tile p,.restaurant-food p{font-size:13px;line-height:1.7;color:var(--muted)}.restaurant-eyebrow{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--orange)}
+.restaurant-open{font-size:12px;font-weight:800;color:var(--orange);margin-top:auto;padding-top:24px}
+.restaurant-food{padding:0;overflow:hidden}.restaurant-food-image{height:215px;display:grid;place-items:center;background:#e8eddf;overflow:hidden;font-size:60px;color:var(--orange)}
+.restaurant-food-image img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}.restaurant-food:hover img{transform:scale(1.04)}
+.restaurant-food-body{padding:20px}.restaurant-food-body strong{display:block;margin-top:12px;font-size:17px}
+.restaurant-note{font-size:12px;color:var(--muted);line-height:1.7}
+.restaurant-empty,.restaurant-application-state{border:1px dashed #ded4be;border-radius:20px;background:#fffefa;padding:35px;max-width:800px;margin:20px 0;color:var(--muted);line-height:1.8}
+.restaurant-empty a,.restaurant-application-state a{color:var(--orange);font-weight:750}
+.restaurant-dashboard-grid{display:grid;grid-template-columns:minmax(300px,.9fr) minmax(300px,1.1fr);gap:22px}.restaurant-panel>h2{font-size:27px;letter-spacing:-1px;margin:0 0 18px}.restaurant-form{display:grid;gap:17px}
+.restaurant-form textarea{resize:vertical}.restaurant-checks{display:grid;gap:8px;background:#f1f0e8;padding:15px;border-radius:14px}.restaurant-checks label{display:flex;align-items:center;gap:12px;font-size:13px}
+.restaurant-checks input{width:18px;height:18px;accent-color:var(--orange)}
+.restaurant-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.restaurant-button,.restaurant-secondary{min-height:42px;padding:10px 16px;border-radius:10px;font-weight:750;font-size:12px;cursor:pointer;border:1px solid #d8d6c9}
+.restaurant-button{background:var(--orange);color:#fff;border-color:var(--orange)}.restaurant-secondary{background:#fffefa;color:var(--ink)}.restaurant-button:disabled,.restaurant-secondary:disabled{opacity:.55;cursor:not-allowed}
+.restaurant-dash-list{display:grid;gap:10px}.restaurant-dash-item{display:flex;justify-content:space-between;gap:15px;padding:15px 0;border-bottom:1px solid var(--line)}.restaurant-dash-item strong{font-size:14px}.restaurant-dash-item p{font-size:11px;margin:5px 0;color:var(--muted)}
+.restaurant-count{color:var(--orange);font-size:12px}.restaurant-error{border:1px solid #e7b3a7;background:#fff0ea;border-radius:10px;padding:12px;color:#9b341c;font-size:12px}.restaurant-ok{border:1px solid #bcd3ac;background:#f1faeb;border-radius:10px;padding:12px;color:#285338;font-size:12px}
+.restaurant-approval-list{display:grid;gap:16px;grid-template-columns:repeat(2,minmax(0,1fr))}.restaurant-approval-list p{line-height:1.6;font-size:13px}
+@media(max-width:850px){.restaurant-dashboard-grid,.restaurant-approval-list{grid-template-columns:1fr}.restaurant-grid,.restaurant-menu-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.restaurant-container{padding-top:34px}}
+@media(max-width:530px){.restaurant-grid,.restaurant-menu-grid{grid-template-columns:1fr}.restaurant-top{padding:16px 5%;flex-wrap:wrap}.restaurant-top nav{gap:12px;flex-wrap:wrap}.restaurant-container{padding-bottom:55px}.restaurant-intro{margin-bottom:24px}.restaurant-intro h1{font-size:49px}.restaurant-panel{padding:17px}.restaurant-dash-item{flex-direction:column}}
+@media(prefers-reduced-motion:reduce){.restaurant-tile,.restaurant-food-image img{transition:none}.restaurant-tile:hover,.restaurant-food:hover img{transform:none}}

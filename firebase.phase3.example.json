@@ -1,0 +1,6 @@
+{
+  "functions": [{"source":"services/functions","codebase":"default","runtime":"nodejs22"}],
+  "firestore": {"rules":"firebase/firestore.rules","indexes":"firebase/firestore.indexes.json"},
+  "emulators": {"auth":{"port":9099},"firestore":{"port":8080},"functions":{"port":5001},"ui":{"enabled":true,"port":4000}},
+  "hosting": {"public":"apps/web/dist","ignore":["firebase.json","**/.*","**/node_modules/**"],"rewrites":[{"source":"**","destination":"/index.html"}]}
+}

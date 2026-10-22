@@ -1,0 +1,1040 @@
+{
+  "status": "structure-only",
+  "files": [
+    {
+      "path": ".editorconfig",
+      "purpose": "Shared editor formatting",
+      "phase": "core"
+    },
+    {
+      "path": ".github/workflows/README.md",
+      "purpose": "Future CI: typecheck, domain/rule tests, browser tests, then deployment; no workflow enabled",
+      "phase": "core"
+    },
+    {
+      "path": ".gitignore",
+      "purpose": "Exclude dependencies, generated files and private credentials",
+      "phase": "core"
+    },
+    {
+      "path": "OPEN_FOLDER_MAP.html",
+      "purpose": "Offline expandable explorer containing all files and responsibilities",
+      "phase": "core"
+    },
+    {
+      "path": "README.md",
+      "purpose": "Project overview and accurate setup instructions",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/.env.example",
+      "purpose": "Public frontend configuration template",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/index.html",
+      "purpose": "Explicit static scaffold notice; React mounting will be connected during implementation",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/package.json",
+      "purpose": "Workspace manifest; dependency setup pending",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/public/README.md",
+      "purpose": "Directly served static assets",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/app/App.tsx",
+      "purpose": "Application composition",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/app/providers.tsx",
+      "purpose": "Authentication and query providers",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/app/router.tsx",
+      "purpose": "Public and role-specific routes",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/assets/README.md",
+      "purpose": "Bundled images and icons",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/components/charts/AlgorithmComparisonChart.tsx",
+      "purpose": "Solver comparison chart",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/components/maps/LocationMarker.tsx",
+      "purpose": "Shared location marker",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/components/maps/RouteMap.tsx",
+      "purpose": "Shared route-map component",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/components/ui/README.md",
+      "purpose": "Shared UI primitives",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/admin/AccountApprovalsPage.tsx",
+      "purpose": "Restaurant and rider approvals",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/admin/AdminDashboardPage.tsx",
+      "purpose": "Administrative overview",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/admin/DispatchPage.tsx",
+      "purpose": "Optimization preview and explicit dispatch commit",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/admin/OrdersPage.tsx",
+      "purpose": "Platform order supervision",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/admin/SettingsPage.tsx",
+      "purpose": "Platform configuration",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/admin/UsersPage.tsx",
+      "purpose": "Account management",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/admin/admin.api.ts",
+      "purpose": "Administrative API calls",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/algorithm-lab/AlgorithmLabPage.tsx",
+      "purpose": "DAA experiment workspace",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/algorithm-lab/ComparisonTable.tsx",
+      "purpose": "Measured solver comparisons",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/algorithm-lab/RunHistoryPage.tsx",
+      "purpose": "Saved experiment history",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/algorithm-lab/ScenarioEditor.tsx",
+      "purpose": "Graph and route scenario editing",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/algorithm-lab/algorithmLab.api.ts",
+      "purpose": "Isolated optimization experiment requests",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/analytics/AnalyticsPage.tsx",
+      "purpose": "Operational analytics",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/analytics/MetricCard.tsx",
+      "purpose": "Metric presentation",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/auth/ForgotPasswordPage.tsx",
+      "purpose": "Password reset",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/auth/LoginPage.tsx",
+      "purpose": "Shared sign-in page",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/auth/RegisterPage.tsx",
+      "purpose": "Customer registration and operational account applications",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/auth/RequireRole.tsx",
+      "purpose": "Frontend role gate; backend authorization remains mandatory",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/auth/VerifyEmailPage.tsx",
+      "purpose": "Email verification",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/auth/auth.api.ts",
+      "purpose": "Account profile and application API calls",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/auth/useAuth.ts",
+      "purpose": "Firebase authentication subscription",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/cart/CartItem.tsx",
+      "purpose": "Cart line item",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/cart/CartPage.tsx",
+      "purpose": "Customer basket",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/cart/cart.api.ts",
+      "purpose": "Owner-specific cart operations",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/cart/cartStore.ts",
+      "purpose": "Cart interface state",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/checkout/AddressPicker.tsx",
+      "purpose": "Address and confirmed delivery pin",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/checkout/CheckoutPage.tsx",
+      "purpose": "Checkout flow",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/checkout/OrderSummary.tsx",
+      "purpose": "Server-priced quote display",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/checkout/checkout.api.ts",
+      "purpose": "Quote and idempotent order requests",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/landing/LandingPage.tsx",
+      "purpose": "Public project landing page",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/merchant/KitchenOrdersPage.tsx",
+      "purpose": "Acceptance and preparation queue",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/merchant/MenuManagementPage.tsx",
+      "purpose": "Restaurant-owned menu management",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/merchant/RestaurantDashboardPage.tsx",
+      "purpose": "Merchant dashboard",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/merchant/RestaurantSettingsPage.tsx",
+      "purpose": "Restaurant opening hours and settings",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/merchant/merchant.api.ts",
+      "purpose": "Restaurant operations API calls",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/notifications/NotificationList.tsx",
+      "purpose": "User notification display",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/orders/OrderDetailPage.tsx",
+      "purpose": "Customer order details",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/orders/OrderHistoryPage.tsx",
+      "purpose": "Customer order history",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/orders/OrderTimeline.tsx",
+      "purpose": "Order event timeline",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/orders/orders.api.ts",
+      "purpose": "Order read and cancellation operations",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/profile/ProfilePage.tsx",
+      "purpose": "Profile editing",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/profile/SavedAddressesPage.tsx",
+      "purpose": "Saved delivery addresses",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/restaurants/MenuItemCard.tsx",
+      "purpose": "Menu item presentation",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/restaurants/RestaurantDetailPage.tsx",
+      "purpose": "Restaurant menu browsing",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/restaurants/RestaurantListPage.tsx",
+      "purpose": "Restaurant discovery",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/restaurants/restaurants.api.ts",
+      "purpose": "Restaurant browsing API calls",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/rider/ActiveRoutePage.tsx",
+      "purpose": "Saved ordered stops and delivery actions",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/rider/AssignmentOffer.tsx",
+      "purpose": "Time-limited accept or reject offer",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/rider/DeliveryHistoryPage.tsx",
+      "purpose": "Actual completed delivery history",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/rider/RiderDashboardPage.tsx",
+      "purpose": "Rider availability and workload",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/rider/rider.api.ts",
+      "purpose": "Assignment pickup and completion requests",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/rider/useRiderLocation.ts",
+      "purpose": "Single GPS watcher with cleanup and throttling",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/tracking/TrackOrderPage.tsx",
+      "purpose": "Authorized active-delivery tracking",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/features/tracking/useOrderTracking.ts",
+      "purpose": "Live tracking subscription and cleanup",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/hooks/README.md",
+      "purpose": "Cross-feature hooks",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/layouts/AdminLayout.tsx",
+      "purpose": "Admin navigation and layout",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/layouts/CustomerLayout.tsx",
+      "purpose": "Customer navigation and layout",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/layouts/PublicLayout.tsx",
+      "purpose": "Public navigation and layout",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/layouts/RestaurantLayout.tsx",
+      "purpose": "Restaurant navigation and layout",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/layouts/RiderLayout.tsx",
+      "purpose": "Rider navigation and layout",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/lib/apiClient.ts",
+      "purpose": "Authenticated backend API client",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/lib/firebase.ts",
+      "purpose": "Firebase client initialization",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/lib/maps.ts",
+      "purpose": "Map display adapter",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/main.tsx",
+      "purpose": "React application bootstrap",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/styles/globals.css",
+      "purpose": "Global styles; frontend design to be decided",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/styles/tokens.css",
+      "purpose": "Design tokens; colors and typography to be decided",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/src/tests/README.md",
+      "purpose": "Frontend component and contract tests",
+      "phase": "core"
+    },
+    {
+      "path": "apps/web/vite.config.ts",
+      "purpose": "Vite build configuration; dependency setup pending",
+      "phase": "core"
+    },
+    {
+      "path": "docs/FILE_STRUCTURE.md",
+      "purpose": "Full directory and file responsibility inventory",
+      "phase": "core"
+    },
+    {
+      "path": "docs/FILE_STRUCTURE_FLOWCHART.md",
+      "purpose": "Rendered-in-compatible-viewers folder diagram and structure explanation",
+      "phase": "core"
+    },
+    {
+      "path": "docs/algorithm-analysis.md",
+      "purpose": "Planning document: algorithm-analysis",
+      "phase": "core"
+    },
+    {
+      "path": "docs/api-contracts.md",
+      "purpose": "Planning document: api-contracts",
+      "phase": "core"
+    },
+    {
+      "path": "docs/architecture.md",
+      "purpose": "Planning document: architecture",
+      "phase": "core"
+    },
+    {
+      "path": "docs/database-schema.md",
+      "purpose": "Planning document: database-schema",
+      "phase": "core"
+    },
+    {
+      "path": "docs/deployment.md",
+      "purpose": "Planning document: deployment",
+      "phase": "core"
+    },
+    {
+      "path": "docs/development-roadmap.md",
+      "purpose": "Planning document: development-roadmap",
+      "phase": "core"
+    },
+    {
+      "path": "docs/file-structure.mmd",
+      "purpose": "Editable Mermaid folder-flowchart source",
+      "phase": "core"
+    },
+    {
+      "path": "docs/implementation-status.md",
+      "purpose": "What exists versus what remains to implement",
+      "phase": "core"
+    },
+    {
+      "path": "docs/migration-map.md",
+      "purpose": "Planning document: migration-map",
+      "phase": "core"
+    },
+    {
+      "path": "docs/order-lifecycle.md",
+      "purpose": "Planning document: order-lifecycle",
+      "phase": "core"
+    },
+    {
+      "path": "docs/requirements.md",
+      "purpose": "Planning document: requirements",
+      "phase": "core"
+    },
+    {
+      "path": "firebase.json",
+      "purpose": "Rules paths only; no project binding, function runtime or hosting deployment configured",
+      "phase": "core"
+    },
+    {
+      "path": "firebase/firestore.indexes.json",
+      "purpose": "Index definitions pending actual queries",
+      "phase": "core"
+    },
+    {
+      "path": "firebase/firestore.rules",
+      "purpose": "Deny-all baseline; scoped rules and tests required before implementation",
+      "phase": "core"
+    },
+    {
+      "path": "firebase/storage.rules",
+      "purpose": "Deny-all file access baseline",
+      "phase": "core"
+    },
+    {
+      "path": "package.json",
+      "purpose": "Root npm workspace and structure validation command",
+      "phase": "core"
+    },
+    {
+      "path": "packages/contracts/package.json",
+      "purpose": "Workspace manifest; dependency setup pending",
+      "phase": "core"
+    },
+    {
+      "path": "packages/contracts/src/cart.ts",
+      "purpose": "Cart contracts",
+      "phase": "core"
+    },
+    {
+      "path": "packages/contracts/src/dispatch.ts",
+      "purpose": "Assignment and dispatch contracts",
+      "phase": "core"
+    },
+    {
+      "path": "packages/contracts/src/index.ts",
+      "purpose": "Public contract exports",
+      "phase": "core"
+    },
+    {
+      "path": "packages/contracts/src/optimization.ts",
+      "purpose": "Solver requests and results",
+      "phase": "core"
+    },
+    {
+      "path": "packages/contracts/src/orders.ts",
+      "purpose": "Order API schemas and types",
+      "phase": "core"
+    },
+    {
+      "path": "packages/contracts/src/payments.ts",
+      "purpose": "Payment states and contracts",
+      "phase": "core"
+    },
+    {
+      "path": "packages/contracts/src/restaurants.ts",
+      "purpose": "Restaurant and menu contracts",
+      "phase": "core"
+    },
+    {
+      "path": "packages/contracts/src/routes.ts",
+      "purpose": "Route plans and stops",
+      "phase": "core"
+    },
+    {
+      "path": "packages/contracts/src/statuses.ts",
+      "purpose": "Shared state names",
+      "phase": "core"
+    },
+    {
+      "path": "packages/contracts/src/tracking.ts",
+      "purpose": "Location update and tracking contracts",
+      "phase": "core"
+    },
+    {
+      "path": "packages/contracts/src/users.ts",
+      "purpose": "User profiles and roles",
+      "phase": "core"
+    },
+    {
+      "path": "packages/routing-engine/package.json",
+      "purpose": "Workspace manifest; dependency setup pending",
+      "phase": "core"
+    },
+    {
+      "path": "packages/routing-engine/src/algorithms/astar.ts",
+      "purpose": "Heuristic graph shortest paths",
+      "phase": "core"
+    },
+    {
+      "path": "packages/routing-engine/src/algorithms/dijkstra.ts",
+      "purpose": "Graph shortest paths",
+      "phase": "core"
+    },
+    {
+      "path": "packages/routing-engine/src/algorithms/greedy.ts",
+      "purpose": "Nearest-neighbor TSP",
+      "phase": "core"
+    },
+    {
+      "path": "packages/routing-engine/src/algorithms/heldKarp.ts",
+      "purpose": "Bounded exact Held-Karp TSP",
+      "phase": "core"
+    },
+    {
+      "path": "packages/routing-engine/src/algorithms/mstApproximation.ts",
+      "purpose": "Symmetric metric MST approximation",
+      "phase": "core"
+    },
+    {
+      "path": "packages/routing-engine/src/algorithms/twoOpt.ts",
+      "purpose": "Tour improvement",
+      "phase": "core"
+    },
+    {
+      "path": "packages/routing-engine/src/compare.ts",
+      "purpose": "Compatible solver comparison",
+      "phase": "core"
+    },
+    {
+      "path": "packages/routing-engine/src/distance/haversine.ts",
+      "purpose": "Geographical fallback distances",
+      "phase": "core"
+    },
+    {
+      "path": "packages/routing-engine/src/graph/graph.ts",
+      "purpose": "Explicit graph representation",
+      "phase": "core"
+    },
+    {
+      "path": "packages/routing-engine/src/index.ts",
+      "purpose": "Routing package public exports",
+      "phase": "core"
+    },
+    {
+      "path": "packages/routing-engine/src/metrics/measure.ts",
+      "purpose": "Controlled benchmark measurements",
+      "phase": "core"
+    },
+    {
+      "path": "packages/routing-engine/src/validation/matrix.ts",
+      "purpose": "Finite nonnegative matrix validation",
+      "phase": "core"
+    },
+    {
+      "path": "packages/routing-engine/src/validation/route.ts",
+      "purpose": "Stop coverage and route feasibility",
+      "phase": "core"
+    },
+    {
+      "path": "packages/routing-engine/tests/README.md",
+      "purpose": "Algorithm correctness and invalid-input tests",
+      "phase": "core"
+    },
+    {
+      "path": "scaffold-manifest.json",
+      "purpose": "Machine-readable scaffold inventory",
+      "phase": "core"
+    },
+    {
+      "path": "scripts/check-structure.mjs",
+      "purpose": "Dependency-free file and manifest consistency check",
+      "phase": "core"
+    },
+    {
+      "path": "scripts/migrate-legacy-data.ts",
+      "purpose": "Reviewed and dry-run-first legacy data migration",
+      "phase": "core"
+    },
+    {
+      "path": "scripts/provision-admin.ts",
+      "purpose": "Trusted admin provisioning; never a public signup endpoint",
+      "phase": "core"
+    },
+    {
+      "path": "scripts/seed-demo-data.ts",
+      "purpose": "Development-only demonstration data",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/.env.example",
+      "purpose": "Backend configuration template; no credentials included",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/package.json",
+      "purpose": "Workspace manifest; dependency setup pending",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/admin/handlers.ts",
+      "purpose": "Administrative API handlers",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/admin/service.ts",
+      "purpose": "Platform settings and account supervision",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/analytics/handlers.ts",
+      "purpose": "Analytics API handlers",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/analytics/service.ts",
+      "purpose": "Consistent operational metrics",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/auth/handlers.ts",
+      "purpose": "Account API handlers",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/auth/service.ts",
+      "purpose": "Trusted approvals and role assignment",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/cart/handlers.ts",
+      "purpose": "Cart API handlers",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/cart/service.ts",
+      "purpose": "Owner-specific cart operations",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/config/env.ts",
+      "purpose": "Backend configuration validation",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/config/firebaseAdmin.ts",
+      "purpose": "Trusted Firebase Admin initialization",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/dispatch/eligibility.ts",
+      "purpose": "Rider workload, capacity and availability",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/dispatch/handlers.ts",
+      "purpose": "Dispatch and assignment API handlers",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/dispatch/offerExpiry.ts",
+      "purpose": "Offer expiry and reservation release",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/dispatch/service.ts",
+      "purpose": "Preview, reserve and commit assignment plans",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/index.ts",
+      "purpose": "Firebase function exports; no deployed functions yet",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/menu/handlers.ts",
+      "purpose": "Menu API handlers",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/menu/service.ts",
+      "purpose": "Menu prices and availability",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/notifications/service.ts",
+      "purpose": "User notifications",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/orders/handlers.ts",
+      "purpose": "Order API handlers",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/orders/service.ts",
+      "purpose": "Quotes, order creation, cancellation and completion",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/orders/stateMachine.ts",
+      "purpose": "Authorized order transitions",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/payments/handlers.ts",
+      "purpose": "Payment API handlers",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/payments/service.ts",
+      "purpose": "Separate payment state and method",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/payments/webhook.ts",
+      "purpose": "Verified provider callbacks and duplicate-event protection",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/repositories/assignmentRepository.ts",
+      "purpose": "Firestore access for assignment records",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/repositories/cartRepository.ts",
+      "purpose": "Firestore access for cart records",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/repositories/menuRepository.ts",
+      "purpose": "Firestore access for menu records",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/repositories/notificationRepository.ts",
+      "purpose": "Firestore access for notification records",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/repositories/optimizationRunRepository.ts",
+      "purpose": "Firestore access for optimizationRun records",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/repositories/orderRepository.ts",
+      "purpose": "Firestore access for order records",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/repositories/paymentRepository.ts",
+      "purpose": "Firestore access for payment records",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/repositories/restaurantRepository.ts",
+      "purpose": "Firestore access for restaurant records",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/repositories/riderRepository.ts",
+      "purpose": "Firestore access for rider records",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/repositories/routeRepository.ts",
+      "purpose": "Firestore access for route records",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/repositories/userRepository.ts",
+      "purpose": "Firestore access for user records",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/restaurants/handlers.ts",
+      "purpose": "Restaurant API handlers",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/restaurants/service.ts",
+      "purpose": "Restaurant ownership and operating state",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/rider/handlers.ts",
+      "purpose": "Rider API handlers",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/rider/service.ts",
+      "purpose": "Offer responses and verified pickup/completion",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/routing/handlers.ts",
+      "purpose": "Optimization experiment API handlers",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/routing/mapsProvider.ts",
+      "purpose": "Travel distance and duration provider interface",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/routing/providers/demoProvider.ts",
+      "purpose": "Explicit simulated travel costs",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/routing/providers/googleRoutesProvider.ts",
+      "purpose": "Optional Google Routes integration; provider and budget pending",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/routing/service.ts",
+      "purpose": "Matrix, solver and route-validation orchestration",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/shared/authorization.ts",
+      "purpose": "Current account status, role and ownership checks",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/shared/errors.ts",
+      "purpose": "Consistent API errors",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/shared/idempotency.ts",
+      "purpose": "Duplicate-operation prevention",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/shared/logger.ts",
+      "purpose": "Structured logs without secrets",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/tracking/handlers.ts",
+      "purpose": "Tracking API handlers",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/src/tracking/service.ts",
+      "purpose": "Location validation and active-order access",
+      "phase": "core"
+    },
+    {
+      "path": "services/functions/tests/README.md",
+      "purpose": "Domain service and authorization tests",
+      "phase": "core"
+    },
+    {
+      "path": "services/ml-service/README.md",
+      "purpose": "ml-service: deferred service; not required by core workspaces",
+      "phase": "later"
+    },
+    {
+      "path": "services/ml-service/app/main.py",
+      "purpose": "ml-service main module",
+      "phase": "later"
+    },
+    {
+      "path": "services/ml-service/app/predict.py",
+      "purpose": "ml-service predict module",
+      "phase": "later"
+    },
+    {
+      "path": "services/ml-service/app/schemas.py",
+      "purpose": "ml-service schemas module",
+      "phase": "later"
+    },
+    {
+      "path": "services/ml-service/data/README.md",
+      "purpose": "ML data; no datasets or trained models included",
+      "phase": "later"
+    },
+    {
+      "path": "services/ml-service/models/README.md",
+      "purpose": "ML models; no datasets or trained models included",
+      "phase": "later"
+    },
+    {
+      "path": "services/ml-service/notebooks/README.md",
+      "purpose": "ML notebooks; no datasets or trained models included",
+      "phase": "later"
+    },
+    {
+      "path": "services/ml-service/tests/README.md",
+      "purpose": "ml-service test plan",
+      "phase": "later"
+    },
+    {
+      "path": "services/ml-service/training/README.md",
+      "purpose": "ML training; no datasets or trained models included",
+      "phase": "later"
+    },
+    {
+      "path": "services/optimizer-python/README.md",
+      "purpose": "optimizer-python: deferred service; not required by core workspaces",
+      "phase": "later"
+    },
+    {
+      "path": "services/optimizer-python/app/constraints.py",
+      "purpose": "optimizer-python constraints module",
+      "phase": "later"
+    },
+    {
+      "path": "services/optimizer-python/app/main.py",
+      "purpose": "optimizer-python main module",
+      "phase": "later"
+    },
+    {
+      "path": "services/optimizer-python/app/models.py",
+      "purpose": "optimizer-python models module",
+      "phase": "later"
+    },
+    {
+      "path": "services/optimizer-python/app/solver.py",
+      "purpose": "optimizer-python solver module",
+      "phase": "later"
+    },
+    {
+      "path": "services/optimizer-python/tests/README.md",
+      "purpose": "optimizer-python test plan",
+      "phase": "later"
+    },
+    {
+      "path": "tests/e2e/README.md",
+      "purpose": "Browser journeys for all four roles",
+      "phase": "core"
+    },
+    {
+      "path": "tests/fixtures/README.md",
+      "purpose": "Deterministic synthetic scenarios",
+      "phase": "core"
+    },
+    {
+      "path": "tests/integration/README.md",
+      "purpose": "Checkout dispatch and payment integration tests",
+      "phase": "core"
+    },
+    {
+      "path": "tests/rules/README.md",
+      "purpose": "Firestore and Storage allow-deny tests",
+      "phase": "core"
+    }
+  ]
+}

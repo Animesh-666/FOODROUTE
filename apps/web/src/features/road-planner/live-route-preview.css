@@ -1,0 +1,12 @@
+.live-route-page .restaurant-intro{max-width:920px}
+.live-banner{padding:17px 22px;margin:0 0 22px;border-radius:18px;border:1px solid #e8d9c1;background:linear-gradient(110deg,#fdf0db,#f7f6ec);font-size:13px;line-height:1.65;color:#58564a}
+.live-banner strong{color:#cf4e29}.live-route-page .road-layout{grid-template-columns:minmax(330px,.85fr) minmax(0,1.3fr)}
+.live-order-option{display:flex!important;flex-direction:row!important;align-items:center;gap:12px;border:1px solid #e6dfd0;border-radius:14px;padding:15px;background:#fffdf8;cursor:pointer;line-height:1.6}
+.live-order-option input{accent-color:#de5027;min-width:18px;height:18px}
+.live-order-option span{display:flex;flex-direction:column;min-width:0}.live-order-option strong{font-size:13px;overflow-wrap:anywhere}.live-order-option small{font-size:12px;color:#716d61}
+.live-order-option:has(input:checked){background:#f5f6ed;border-color:#b6c7ae}
+.live-empty{padding:22px;border:1px dashed #e1d2bd;border-radius:16px;font-size:13px;line-height:1.65;color:#6e675d}
+.live-message{font-size:12px;color:#346548;background:#edf4eb;border-radius:12px;padding:12px}
+.live-map-actions{margin-top:21px}.live-explainer h2{font-size:24px;letter-spacing:-.04em}.live-explainer p{font-size:14px;line-height:1.75;color:#6e675d}
+.live-route-page .road-settings .restaurant-error{font-size:13px}
+@media(max-width:900px){.live-route-page .road-layout{grid-template-columns:1fr}}

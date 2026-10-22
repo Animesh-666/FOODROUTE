@@ -1,0 +1,9 @@
+{
+  "name": "@foodroute/routing-engine",
+  "private": true,
+  "version": "0.6.0",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node tests/tsp.test.cjs && node tests/road-routing.test.cjs"
+  }
+}

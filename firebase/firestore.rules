@@ -1,0 +1,165 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function owns(uid) { return signedIn() && request.auth.uid == uid; }
+    function profilePath(uid) { return /databases/$(database)/documents/users/$(uid); }
+    function restaurantPath(id) { return /databases/$(database)/documents/restaurants/$(id); }
+    function activeRole(role) {
+      return signedIn() && request.auth.token.role == role
+        && get(profilePath(request.auth.uid)).data.role == role
+        && get(profilePath(request.auth.uid)).data.status == 'active';
+    }
+    function isAdmin() { return activeRole('admin'); }
+    function isRestaurantOwner(id) {
+      return activeRole('restaurant')
+        && exists(restaurantPath(id))
+        && get(restaurantPath(id)).data.ownerUid == request.auth.uid;
+    }
+    function isApprovedRestaurant(id) {
+      return exists(restaurantPath(id))
+        && get(restaurantPath(id)).data.approved == true
+        && get(restaurantPath(id)).data.status == 'active';
+    }
+    function customerCreate(userId) {
+      return owns(userId)
+        && request.resource.data.keys().hasOnly(['uid','displayName','email','role','status','createdAt','updatedAt'])
+        && request.resource.data.keys().hasAll(['uid','displayName','email','role','status','createdAt','updatedAt'])
+        && request.resource.data.uid == userId
+        && request.resource.data.role == 'customer'
+        && request.resource.data.status == 'active'
+        && request.auth.token.email is string
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() >= 2
+        && request.resource.data.displayName.size() <= 80
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+    }
+    function profileNameOnly() {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['displayName','updatedAt'])
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() >= 2
+        && request.resource.data.displayName.size() <= 80
+        && request.resource.data.updatedAt == request.time;
+    }
+    match /users/{uid} {
+      allow get: if owns(uid) || isAdmin();
+      allow list: if isAdmin();
+      allow create: if customerCreate(uid);
+      allow update: if owns(uid) && profileNameOnly();
+      allow delete: if false;
+    }
+    function validApplication() {
+      return request.resource.data.keys().hasOnly(['ownerUid','contactEmail','name','city','cuisine','description','status','submittedAt'])
+        && request.resource.data.keys().hasAll(['ownerUid','contactEmail','name','city','cuisine','description','status','submittedAt'])
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.contactEmail == request.auth.token.email
+        && request.resource.data.status == 'pending'
+        && request.resource.data.name is string && request.resource.data.name.size() >= 3 && request.resource.data.name.size() <= 90
+        && request.resource.data.city is string && request.resource.data.city.size() >= 2 && request.resource.data.city.size() <= 70
+        && request.resource.data.cuisine is string && request.resource.data.cuisine.size() >= 2 && request.resource.data.cuisine.size() <= 50
+        && request.resource.data.description is string && request.resource.data.description.size() >= 10 && request.resource.data.description.size() <= 300
+        && request.resource.data.submittedAt == request.time;
+    }
+    match /restaurantApplications/{uid} {
+      allow get: if owns(uid) || isAdmin();
+      allow list: if isAdmin();
+      allow create: if owns(uid)
+        && get(profilePath(uid)).data.role == 'customer'
+        && get(profilePath(uid)).data.status == 'active'
+        && request.auth.token.email_verified == true
+        && validApplication();
+      // Applications can ONLY be approved/rejected by trusted Admin SDK operations.
+      allow update, delete: if false;
+    }
+    function publicRestaurant() {
+      return resource.data.approved == true && resource.data.status == 'active';
+    }
+    function validMenu() {
+      return request.resource.data.keys().hasOnly([
+          'name','description','category','pricePaise','imageUrl','vegetarian','available','published','createdAt','updatedAt'
+        ])
+        && request.resource.data.keys().hasAll([
+          'name','description','category','pricePaise','imageUrl','vegetarian','available','published','createdAt','updatedAt'
+        ])
+        && request.resource.data.name is string && request.resource.data.name.size() >= 3 && request.resource.data.name.size() <= 90
+        && request.resource.data.description is string && request.resource.data.description.size() >= 5 && request.resource.data.description.size() <= 250
+        && request.resource.data.category in ['Burgers','Bowls','Pizza','Sides','Drinks','Desserts','Other']
+        && request.resource.data.pricePaise is int && request.resource.data.pricePaise >= 100 && request.resource.data.pricePaise <= 1000000
+        && request.resource.data.imageUrl is string
+        && request.resource.data.imageUrl.size() <= 500
+        && request.resource.data.imageUrl.matches('^(https://[^ ]+|/assets/[A-Za-z0-9._/-]+)?$')
+        && request.resource.data.vegetarian is bool
+        && request.resource.data.available is bool
+        && request.resource.data.published is bool
+        && request.resource.data.updatedAt == request.time;
+    }
+    match /restaurants/{restaurantId} {
+      allow get, list: if publicRestaurant() || isRestaurantOwner(restaurantId) || isAdmin();
+      // Restaurant approval and ownership are server-controlled.
+      allow create, update, delete: if false;
+      match /menuItems/{itemId} {
+        allow get, list: if isRestaurantOwner(restaurantId) || isAdmin()
+          || (isApprovedRestaurant(restaurantId) && resource.data.published == true);
+        allow create: if isRestaurantOwner(restaurantId) && isApprovedRestaurant(restaurantId)
+          && validMenu()
+          && request.resource.data.createdAt == request.time;
+        allow update: if isRestaurantOwner(restaurantId) && isApprovedRestaurant(restaurantId)
+          && validMenu()
+          && request.resource.data.createdAt == resource.data.createdAt
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+            'name','description','category','pricePaise','imageUrl','vegetarian','available','published','updatedAt'
+          ]);
+        // Soft unpublish preserves menu references for future orders.
+        allow delete: if false;
+      }
+    }
+    // Phase 4: clients can read only their own relevant orders.
+    // All writes MUST use authenticated trusted API / Firebase Functions.
+    match /orders/{orderId} {
+      allow get, list: if signedIn()
+        && (resource.data.get('assignedRiderUid', '') == request.auth.uid && activeRole('rider')
+          || resource.data.customerUid == request.auth.uid
+          || (activeRole('restaurant')
+              && resource.data.restaurantId == 'rest_' + request.auth.uid
+              && get(restaurantPath(resource.data.restaurantId)).data.ownerUid == request.auth.uid)
+          || isAdmin());
+      allow create, update, delete: if false;
+      match /events/{eventId} {
+        allow read, write: if false;
+      }
+    }
+
+    // Phase 5: rider onboarding, all privilege grants occur in trusted Admin SDK scripts.
+    match /riderApplications/{uid} {
+      allow get: if owns(uid) || isAdmin();
+      allow list: if isAdmin();
+      allow create: if owns(uid)
+        && request.auth.token.email_verified == true
+        && get(profilePath(uid)).data.role == 'customer'
+        && get(profilePath(uid)).data.status == 'active'
+        && request.resource.data.keys().hasOnly(['ownerUid','displayName','city','vehicleType','status','submittedAt'])
+        && request.resource.data.keys().hasAll(['ownerUid','displayName','city','vehicleType','status','submittedAt'])
+        && request.resource.data.ownerUid == uid
+        && request.resource.data.status == 'pending'
+        && request.resource.data.submittedAt == request.time
+        && request.resource.data.displayName is string && request.resource.data.displayName.size() >= 2 && request.resource.data.displayName.size() <= 80
+        && request.resource.data.city is string && request.resource.data.city.size() >= 2 && request.resource.data.city.size() <= 80
+        && request.resource.data.vehicleType in ['bicycle','scooter','motorbike'];
+      allow update, delete: if false;
+    }
+    match /deliveryAgents/{riderUid} {
+      allow get: if owns(riderUid) && activeRole('rider') || isAdmin();
+      allow list: if isAdmin();
+      allow create, update, delete: if false;
+    }
+    match /deliveryRoutes/{routeId} {
+      allow get, list: if isAdmin() || (activeRole('rider') && resource.data.riderUid == request.auth.uid);
+      allow create, update, delete: if false;
+      match /stops/{stopId} { allow read, write: if false; }
+    }
+    // All remaining data collections are denied until a later phase defines access.
+    match /{document=**} { allow read, write: if false; }
+  }
+}

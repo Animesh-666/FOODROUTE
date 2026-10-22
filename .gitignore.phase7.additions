@@ -1,0 +1,25 @@
+# Node/build/runtime outputs
+**/node_modules/
+**/dist/
+**/lib/
+**/coverage/
+.firebase/
+*.log
+# Credentials: never commit; Firebase web configuration templates are okay
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+*service-account*.json
+*service_account*.json
+*client_secret*.json
+*oauth*secret*.json
+*.pem
+*.p12
+*.pfx
+# Browser test reports
+**/playwright-report/
+**/test-results/
+.DS_Store

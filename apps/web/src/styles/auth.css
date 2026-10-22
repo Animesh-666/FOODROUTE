@@ -1,0 +1,50 @@
+/* FOODROUTE auth is deliberately aligned with the approved warm-ivory, orange design. */
+.header nav .account-link{border:1px solid #d8d6c9;border-radius:30px;padding:11px 17px;white-space:nowrap}
+.header nav .account-link:hover{color:var(--orange);border-color:var(--orange)}
+.auth-layout{min-height:100dvh;display:flex;flex-direction:column;background:var(--paper)}
+.auth-topbar{width:100%;max-width:1440px;margin:0 auto;padding:24px 6%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);gap:15px}
+.auth-toplink{font-size:13px;font-weight:700;color:var(--orange);text-decoration:none}
+.auth-toplink:hover{text-decoration:underline}
+.auth-page{width:100%;max-width:1440px;margin:0 auto;display:grid;grid-template-columns:minmax(0,.95fr) minmax(340px,.85fr);align-items:center;gap:clamp(24px,6vw,110px);flex:1;padding:45px 6% 75px}
+.auth-story{min-height:470px;position:relative;background:#e8ecde;border:1px solid #e2e3d4;border-radius:32px;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:34px 38px;isolation:isolate}
+.auth-story:before{content:'';position:absolute;width:390px;height:390px;border:1px solid #c4ceb3;border-radius:50%;top:-95px;right:-90px;z-index:-1;box-shadow:0 0 0 45px #d5ddc515,0 0 0 95px #fdfdf51d}
+.auth-story img{position:absolute;object-fit:contain;right:-10%;top:-22%;width:115%;height:93%;animation:float 6s ease-in-out infinite;filter:drop-shadow(0 25px 22px #3f3a191c);z-index:-1}
+.auth-story-kicker{font-size:10px;letter-spacing:2.2px;color:#567048;font-weight:800}
+.auth-story h2{font-size:clamp(36px,4vw,60px);line-height:1.08;letter-spacing:-.065em;margin:11px 0}
+.auth-story p{font-size:13px;color:#586252;margin:0}
+.auth-card{max-width:485px;width:100%;margin:0 auto}
+.auth-card h1{font-size:clamp(40px,4.4vw,60px);line-height:1.15;letter-spacing:-.055em;margin:18px 0 10px}
+.auth-caption{font-size:14px;line-height:1.7;color:var(--muted);margin:0 0 23px}
+.auth-form{display:grid;gap:10px;margin-top:14px}
+.auth-form label{display:block;font-size:12px;font-weight:750;letter-spacing:.15px}
+.auth-form input{display:block;width:100%;min-height:49px;border:1px solid #d6d7cb;border-radius:12px;background:#fffefb;color:var(--ink);padding:13px 15px;outline-offset:3px;font-size:14px}
+.auth-form input:focus{border-color:var(--orange);outline:2px solid #d84b233b}
+.auth-form input::placeholder{color:#94978e}
+.auth-label-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:7px}
+.auth-label-row a,.auth-switch a{color:var(--orange);font-size:12px;font-weight:750;text-decoration:none}
+.auth-label-row a:hover,.auth-switch a:hover{text-decoration:underline}
+.auth-submit{width:100%;margin-top:10px;justify-content:center;font-size:14px}
+.auth-submit:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.auth-switch{margin:24px 0 0;text-align:center;font-size:13px;color:var(--muted)}
+.auth-switch a{font-size:13px}
+.auth-note,.auth-hint{color:var(--muted);font-size:11px;line-height:1.6;margin:0}
+.auth-error,.auth-alert,.auth-success{font-size:12px;line-height:1.65;padding:12px 14px;border-radius:12px;margin:8px 0;overflow-wrap:anywhere}
+.auth-error{background:#fff0ea;border:1px solid #f0b9a8;color:#9b341c}
+.auth-alert{background:#fff8dc;border:1px solid #ebd8a1;color:#5d4b17}
+.auth-success{background:#ecf4e5;border:1px solid #c9dec5;color:#285338}
+.auth-footer{display:flex;justify-content:space-between;gap:10px;padding:22px 6%;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}
+.account-meta{display:grid;gap:10px;border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:20px;background:#fffcf5}
+.account-meta>div{display:flex;gap:8px;justify-content:space-between;align-items:center;overflow-wrap:anywhere}
+.account-meta span{font-size:12px;color:var(--muted)}
+.account-meta strong{font-size:12px;text-align:right}
+.account-next{margin:22px 0;padding:17px;border-radius:15px;background:var(--sage)}
+.account-next strong{font-size:13px}
+.account-next p{font-size:12px;line-height:1.6;color:var(--muted)}
+.auth-inline-button,.auth-signout{display:inline-flex;background:none;border:0;color:var(--orange);text-decoration:underline;text-underline-offset:4px;font-size:12px;font-weight:700;min-height:44px;align-items:center;padding:6px 0}
+.auth-signout{color:#7b3f2d}
+@media(max-width:850px){.auth-page{grid-template-columns:1fr;max-width:640px;padding-top:30px}.auth-story{min-height:225px;order:2;margin-top:20px}.auth-story img{width:60%;height:130%;right:-10%;top:-35%}.auth-card{order:1}}
+@media(max-width:480px){.auth-story{display:none}.auth-page{padding:35px 6% 70px}.auth-topbar .brand{font-size:23px}.auth-toplink{font-size:11px}.auth-card h1{font-size:43px}}
+@media(prefers-reduced-motion:reduce){.auth-story img{animation:none}}
+.auth-verification-actions{display:flex;align-items:center;flex-wrap:wrap;gap:4px 18px}
+
+.live-restaurant-callout{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;background:#f0eee3;border:1px solid #e2dbcb;border-radius:14px;padding:13px 17px;font-size:12px;margin:20px 0;color:#625f53}.live-restaurant-callout a{color:var(--orange);font-weight:800}.live-restaurant-callout a:hover{text-decoration:underline}

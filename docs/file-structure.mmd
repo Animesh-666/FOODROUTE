@@ -1,0 +1,12 @@
+flowchart TD
+    ROOT["FOODROUTE-2.0"] --> APPS["apps"]
+    ROOT --> SERVICES["services"]
+    ROOT --> PACKAGES["packages"]
+    APPS --> WEB["web: React application"]
+    SERVICES --> FUNCTIONS["functions: Firebase backend"]
+    SERVICES --> PYTHON["optimizer-python and ml-service: later"]
+    PACKAGES --> CONTRACTS["contracts: shared schemas"]
+    PACKAGES --> ENGINE["routing-engine: DAA algorithms"]
+    WEB --> FEATURES["Role pages, features and components"]
+    FUNCTIONS --> BUSINESS["Handlers, services and repositories"]
+    ENGINE --> SOLVERS["Solvers, validation and metrics"]

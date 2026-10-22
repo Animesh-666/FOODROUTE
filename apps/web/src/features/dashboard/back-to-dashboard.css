@@ -1,0 +1,8 @@
+/* Page-level navigation; scoped to avoid changing Floating Food landing styles. */
+.fr-back-to-dashboard{position:fixed;z-index:70;left:clamp(12px,2vw,28px);bottom:calc(18px + env(safe-area-inset-bottom,0px));pointer-events:none}
+.fr-back-to-dashboard a{box-sizing:border-box;pointer-events:auto;display:inline-flex;align-items:center;gap:10px;min-height:46px;padding:11px 18px;border:1px solid #ead6c6;border-radius:999px;background:#fffaf3f2;color:#312b24!important;box-shadow:0 8px 28px #30211423;text-decoration:none;font:700 12px/1.25 system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:box-shadow .2s,transform .2s;backdrop-filter:blur(12px)}
+.fr-back-to-dashboard a:hover{transform:translateY(-2px);box-shadow:0 12px 32px #30211430}
+.fr-back-to-dashboard a:focus-visible{outline:3px solid #dc4d29;outline-offset:3px}
+.fr-back-arrow{display:grid;place-items:center;width:25px;height:25px;flex-shrink:0;border-radius:50%;background:#dc4d29;color:white;font-size:17px}
+@media(max-width:480px){.fr-back-to-dashboard{bottom:calc(12px + env(safe-area-inset-bottom,0px));left:12px}.fr-back-to-dashboard a{min-height:44px;padding:8px 13px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){.fr-back-to-dashboard a{transition:none}}

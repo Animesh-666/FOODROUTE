@@ -1,0 +1,6 @@
+{
+  "name": "foodroute-release-browser-checks",
+  "private": true,
+  "scripts": {"test":"playwright test","test:mobile":"playwright test --project=mobile"},
+  "devDependencies": {"@playwright/test":"^1.55.0"}
+}

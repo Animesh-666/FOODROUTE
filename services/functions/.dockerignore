@@ -1,0 +1,7 @@
+node_modules
+lib
+.env*
+**/*.json.bak
+*.log
+scripts
+tests

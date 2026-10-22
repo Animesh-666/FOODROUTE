@@ -1,0 +1,9 @@
+{
+  "indexes": [
+    { "collectionGroup": "restaurants", "queryScope": "COLLECTION", "fields": [
+      { "fieldPath":"approved", "order":"ASCENDING" },
+      { "fieldPath":"status", "order":"ASCENDING" }
+    ] }
+  ],
+  "fieldOverrides": []
+}
